@@ -14,6 +14,7 @@
 call plug#begin()
 Plug 'editorconfig/editorconfig-vim'
 Plug 'vim-airline/vim-airline'
+Plug 'tpope/vim-commentary'
 call plug#end()
 
 
@@ -406,7 +407,7 @@ call AddEmacsKey('<C-x><C-r>', ':set<SPACE>readonly!<CR>')
 call AddEmacsKey('<C-x><C-t>', ':set<SPACE>wrap!<CR>')
 
 " C-;: toggle comment
-call AddEmacsKey('<C-;>', ':CommentToggle<CR>')
+call AddEmacsKey('<C-;>', ':Commentary<CR>')
 
 " """"""""""""""""""""
 " Developer
