@@ -9,7 +9,8 @@ This repository stores the configuration files for the editors I use, such as VS
 | Editor | Configuration | Status |
 | --- | --- | --- |
 | Vim | [vim/vimrc](vim/vimrc) | Available |
-| VS Code, Emacs, Zed, ... | | Planned |
+| Zed | [zed/settings.json](zed/settings.json), [zed/keymap.json](zed/keymap.json) | Available |
+| VS Code, Emacs, ... | | Planned |
 
 ### Vim
 
@@ -28,6 +29,24 @@ mv -f ~/.vimrc.new ~/.vimrc
 ```
 
 vim-plug and the plugins are installed automatically on the first run.
+
+### Zed
+
+The Zed configuration uses the Emacs base keymap and switches the theme with the system appearance.
+
+```sh
+# 1. Backup the current settings (skip if they do not exist)
+cp ~/.config/zed/settings.json ~/.config/zed/settings.json.bak
+cp ~/.config/zed/keymap.json ~/.config/zed/keymap.json.bak
+
+# 2. Download the files to temporary files
+curl -fsSL --proto '=https' -o ~/.config/zed/settings.json.new https://raw.githubusercontent.com/shotakaha/editors/main/zed/settings.json
+curl -fsSL --proto '=https' -o ~/.config/zed/keymap.json.new https://raw.githubusercontent.com/shotakaha/editors/main/zed/keymap.json
+
+# 3. Replace the current files
+mv -f ~/.config/zed/settings.json.new ~/.config/zed/settings.json
+mv -f ~/.config/zed/keymap.json.new ~/.config/zed/keymap.json
+```
 
 ## Documentation
 
