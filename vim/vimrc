@@ -8,6 +8,8 @@
 " $ cp vimrc ~/.vimrc
 " """"""""""""""""""""
 
+set nocompatible
+
 " """"""""""""""""""""
 " Plugins
 " """"""""""""""""""""
@@ -29,7 +31,6 @@ call plug#end()
 " Settings
 " """"""""""""""""""""
 
-set nocompatible
 syntax enable
 set background=dark
 set title    " Show window title
