@@ -1,0 +1,421 @@
+" """"""""""""""""""""
+" Gist: https://gist.github.com/shotakaha/39fa568a150084380a256b18b647612c
+"
+" Install
+" $ cd ~/workspace
+" $ git clone https://gist.github.com/shotakaha/39fa568a150084380a256b18b647612c
+" $ cd 39fa568a150084380a256b18b647612c
+" $ cp vimrc ~/.vimrc
+" """"""""""""""""""""
+
+" """"""""""""""""""""
+" Plugins
+" """"""""""""""""""""
+call plug#begin()
+Plug 'editorconfig/editorconfig-vim'
+Plug 'vim-airline/vim-airline'
+call plug#end()
+
+
+" """"""""""""""""""""
+" Settings
+" """"""""""""""""""""
+
+set nocompatible
+syntax enable
+set background=dark
+set title    " Show window title
+" line numbers
+set number    " Show line number
+set relativenumber    " Use relative line number
+" encodings
+set encoding=utf-8    " Use UTF-8
+set fileencoding=utf-8    " Use UTF-8
+" command line
+set cmdheight=2
+set wildmenu    " Show command completion
+set wildmode=longest:full,full
+" cursor crosshairs
+set cursorline    " Highlight cursor position (row)
+set cursorcolumn    " Highlight cursor position (column)
+" register
+set clipboard=unnamedplus    " Use system clipboard for unnamed register
+" search
+set ignorecase
+set smartcase
+set hlsearch
+set incsearch
+" indent
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set smartindent
+set autoindent
+" save
+autocmd BufWritePre * :%s/\s+$//e    " Remove extra spaces
+" margins
+set scrolloff=8
+set sidescrolloff=8
+set wrap
+set linebreak
+set showbreak=>>>
+" misc
+set mouse=a    " Enable mouse
+set lazyredraw
+set ttyfast
+set splitbelow
+set splitright
+set showmatch
+
+" Foldings
+set foldmethod=indent
+set foldlevel=99
+nnoremap <Tab> za    " Toggle fold/unfold
+nnoremap <S-Tab> zA  " Toggle fold/unfold recursively
+
+" Backups
+set backup
+set backupdir=~/.vim/backup//
+set directory=~/.vim/swap//
+set undodir=~/.vim/undo//
+set undofile
+"set history=1000
+"set undolevels=1000
+"set undoreload=10000
+
+" """"""""""""""""""""
+" Status Line
+"
+" [Left]
+" 1. mode    %{mode()}
+" 2. filename  %F
+" 3. changes   changes
+" 4. line_number      %l
+" 5. column_number    %c    
+" 6. percentage       %p
+" 7. total_lines      %LL   
+"
+" [Center]
+" 8. file_encoding  %{&fileencoding}
+" 9. file_format    %{&fileformat}
+"
+" [Right]
+" 10. buffer_number    %n    
+" 11. tab_width        %{&tabstop}    
+" 12. indent_width     %{&shiftwidth}    
+" """"""""""""""""""""
+function! GetMode()
+    let l:mode = mode()
+    highlight StatusLine ctermfg=Grey ctermbg=Black
+    
+    if l:mode ==# "n"
+        highlight StatusLine ctermfg=Red ctermbg=Black
+        return "NORMAL"
+    elseif l:mode ==# "i"
+        highlight StatusLine ctermfg=Green ctermbg=Black
+        return "INSERT"
+    elseif l:mode ==# "v"
+        highlight StatusLine ctermfg=DarkMagenta ctermbg=Black
+        return "VISUAL"
+    elseif l:mode ==# "V"
+        highlight StatusLine ctermfg=DarkMagenta ctermbg=Black
+        return "V-LINE"
+    elseif l:mode ==# "\<C-v>"
+        highlight StatusLine ctermfg=DarkMagenta ctermbg=Black
+        return "V-BLOCK"
+    elseif l:mode ==# "R"
+        return "REPLACE"
+    elseif l:mode ==# "c"
+        return "COMMAND"
+    elseif l:mode ==# "t"
+        return "TERMINAL"
+    else
+        return "UNKNOWN"
+    endif
+endfunction
+
+set showmode    " Show status line
+set laststatus=2    " Always show status line
+set showcmd    " Show command at status line
+set showcmdloc=tabline
+set statusline=%#StatusLine#\ [%{GetMode()}]\ %F%m\ \(%l,%c\)[%p%%\ %LL]%<%=%r%h%w%y[%{&fileencoding}][%{&fileformat}]%=[b=%n][t=%{&tabstop}][i=%{&shiftwidth}]
+
+" """""
+" Keybinds
+" """""
+
+" Show Keymaps
+" map: Show all keymaps
+" nmap: Show keymaps for normal mode
+" imap: Show keymaps for insert mode
+" vmap: Show keymaps for visual mode
+
+" C-x C-l: list keymaps
+nnoremap <C-x><C-l> :nmap<CR>
+vnoremap <C-x><C-l> :vmap<CR>
+xnoremap <C-x><C-l> :xmap<CR>
+inoremap <C-x><C-l> :imap<CR>
+cnoremap <C-x><C-l> :cmap<CR>
+
+" Modify Keymaps
+" nnoremap: normal mode
+" inoremap: insert mode
+" vnoremap: visual mode
+" snoremap: select mode
+" onoremap: operator mode
+" cnoremap: command line mode
+" tnoremap: terminal mode
+" xnoremap: visual + select mode
+
+" Modifiers
+" C-      Control
+" M-      Meta/Option
+" S-      Shift
+" C-M-    Control + Meta/Option
+" C-S-    Control + Shift
+" M-S-    Meta/Option + Shift
+" C-M-S-  Control + Meta/Option + Shift
+
+" Registers
+" "    unnamed register
+" 0    last yanked
+" 1-9  history (1:new 9:old)
+" -    smal
+" _    blackhole
+" +    clipboard
+" *    clipboard
+" %    filename
+" :    last command
+" /    last search
+" a-z  user defined registers
+
+" Change leader key to Space
+let mapleader=" "
+
+" Edit vimrc
+" SPC ev: open vimrc
+" SPC sv: load vimrc
+nnoremap <leader>ev :edit $MYVIMRC<CR>
+nnoremap <leader>sv :source $MYVIMRC<CR>
+
+" Fix Q to open command history
+" default: Q (Enter Ex mode)
+" C-c to exit q:
+nnoremap Q q:
+
+" Fix Y to copy whole line
+" default: Y y$
+nnoremap Y yy
+
+" Fix D to delete whole line
+" default: D d$
+nnoremap D dd
+
+" Search
+" n: forward search
+" N: backward search
+" zz: scroll cursor to the center
+" zv: unfold
+" :nohlsearch  Clear highlight
+nnoremap n nzzzv
+nnoremap N Nzzzv
+nnoremap <Esc> :nohlsearch<CR>
+
+" Indent
+" gv: return to last visual region
+vnoremap <Tab> >gv
+vnoremap <S-Tab> <gv
+
+" Fix half page scroll
+" zz    center the cursoe
+nnoremap <C-u> <C-u>zz
+nnoremap <C-d> <C-d>zz
+
+" Fix undo / redo
+" make U as :redo (C-r)
+nnoremap u :undo<CR>
+nnoremap U :redo<CR>
+
+" Fix delete
+" put the deleted char to blackhole register
+nnoremap x "_x
+nnoremap X "_X
+xnoremap x "_x
+xnoremap X "_X
+
+" """""
+" Emacs-like Keybinds
+" """""
+
+function! AddEmacsKey(lhs, rhs)
+    execute 'nnoremap' a:lhs a:rhs
+    execute 'xnoremap' a:lhs a:rhs
+    execute 'inoremap' a:lhs '<C-o>' . a:rhs
+    execute 'cnoremap' a:lhs '<C-c>' . a:rhs
+endfunction
+
+" C-g: keyboard-quit
+nnoremap <C-g> <Esc><Esc>
+inoremap <C-g> <Esc><Esc>
+xnoremap <C-g> <Esc><Esc>
+cnoremap <C-g> <C-c><Esc><Esc>
+
+" C-h: backspace
+nnoremap <C-h> <BS>
+inoremap <C-h> <BS>
+xnoremap <C-h> <BS>
+cnoremap <C-h> <BS>
+
+" C-d: delete
+nnoremap <C-d> <Del>
+inoremap <C-d> <Del>
+xnoremap <C-d> <Del>
+cnoremap <C-d> <Del>
+
+" C-n: next line
+nnoremap <C-n> j
+xnoremap <C-n> j
+inoremap <C-n> <Down>
+cnoremap <C-n> <Down>
+
+" C-p: previous line
+nnoremap <C-p> k
+xnoremap <C-p> k
+inoremap <C-p> <Up>
+cnoremap <C-p> <Up>
+
+" C-f: forward char
+nnoremap <C-f> l
+xnoremap <C-f> l
+inoremap <C-f> <Right>
+cnoremap <C-f> <Right>
+
+" C-b: backward char
+nnoremap <C-b> h
+xnoremap <C-b> h
+inoremap <C-b> <Left>
+cnoremap <C-b> <Left>
+
+" C-a: beginning of the line
+nnoremap <C-a> 0
+xnoremap <C-a> 0
+inoremap <C-a> <Home>
+cnoremap <C-a> <Home>
+
+" C-e: end of the line
+nnoremap <C-e> $
+xnoremap <C-e> $
+inoremap <C-e> <End>
+cnoremap <C-e> <End>
+
+" C-s: search forward
+nnoremap <C-s> /
+xnoremap <C-s> /
+inoremap <C-s> <Esc>/
+cnoremap <C-s> <C-c>/
+
+" C-r: search backward
+nnoremap <C-r> ?
+xnoremap <C-r> ?
+inoremap <C-r> <Esc>?
+cnoremap <C-r> <C-c>?
+
+" C-y: yank
+nnoremap <leader>p "+p
+nnoremap <C-y> p
+xnoremap <C-y> p
+inoremap <C-y> <C-r>+
+cnoremap <C-y> <C-r>+
+
+" C-/: undo
+call AddEmacsKey('<C-/>', 'u')
+
+" C-k: kill-line
+call AddEmacsKey('<C-k>', 'd$')
+
+" C-w: kill-region
+call AddEmacsKey('<C-w>', '"_d')
+
+" M-<: beginning of the file
+call AddEmacsKey('<M-<>', 'gg')
+
+" M->: end of the file
+call AddEmacsKey('<M->', 'G')
+
+" C-v: page down
+call AddEmacsKey('<C-v>', '<PageDown>')
+
+" M-v: page up
+call AddEmacsKey('<M-v>', '<PageUp>')
+
+" C-x C-f: open file
+nnoremap <leader>f :e<SPACE>
+call AddEmacsKey('<C-x><C-f>', ':e<SPACE>')
+
+" C-x C-s: save file
+nnoremap <leader>w :w<CR>
+call AddEmacsKey('<C-x><C-s>', ':w<CR>')
+
+" C-x C-c: close file
+nnoremap <leader>q :q<CR>
+call AddEmacsKey('<C-x><C-c>', ':q<CR>')
+
+" C-x C-z: list registers
+call AddEmacsKey('<C-x><C-z>', ':registers<CR>')
+
+" C-x C-b: list buffers
+nnoremap <leader>b :ls<CR>
+call AddEmacsKey('<C-x><C-b>', ':ls<CR>')
+call AddEmacsKey('<C-x><C-w>', ':ls<CR>')
+
+" C-x b: switch buffer
+call AddEmacsKey('<C-x>b', ':b<SPACE>')
+
+" C-x k: kill buffer
+call AddEmacsKey('<C-x>k', ':bd<CR>')
+
+" C-x o: other window
+call AddEmacsKey('<C-x>o', '<C-w>w')
+
+" C-x 1: delete other windows
+call AddEmacsKey('<C-x>1', ':only<CR>')
+
+" C-x 2: split window vertically
+call AddEmacsKey('<C-x>2', ':vsplit<CR>')
+
+" C-x 3: split window horizontally
+call AddEmacsKey('<C-x>3', ':split<CR>')
+
+" C-x 0: delete window
+call AddEmacsKey('<C-x>0', '<C-w>c')
+
+" """"""""""""""""""""
+" Toggle
+" """"""""""""""""""""
+
+" C-x C-r: toggle read-only mode
+call AddEmacsKey('<C-x><C-r>', ':set<SPACE>readonly!<CR>')
+
+" C-x C-t: toggle wrap mode
+call AddEmacsKey('<C-x><C-t>', ':set<SPACE>wrap!<CR>')
+
+" C-;: toggle comment
+call AddEmacsKey('<C-;>', ':CommentToggle<CR>')
+
+" """"""""""""""""""""
+" Developer
+" """"""""""""""""""""
+
+" C-x C-e: eval
+call AddEmacsKey('<C-x><C-e>', ':echo<SPACE>')
+
+" C-x C-m: list functions
+call AddEmacsKey('<C-x><C-m>', 'function<CR>')
+
+" C-x C-n: list variables
+call AddEmacsKey('<C-x><C-n>', ':let<CR>')
+
+" C-x C-v: list options
+call AddEmacsKey('<C-x><C-v>', ':set<CR>')
+
+
