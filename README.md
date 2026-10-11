@@ -4,6 +4,31 @@ My editors configurations.
 
 This repository stores the configuration files for the editors I use, such as VS Code, Emacs, Vim and Zed.
 
+## Editors
+
+| Editor | Configuration | Status |
+| --- | --- | --- |
+| Vim | [vim/vimrc](vim/vimrc) | Available |
+| VS Code, Emacs, Zed, ... | | Planned |
+
+### Vim
+
+The Vim configuration uses [vim-plug](https://github.com/junegunn/vim-plug) for plugins and Emacs-like keybinds.
+Installation steps are written at the top of [vim/vimrc](vim/vimrc).
+
+```sh
+# 1. Backup the current vimrc (skip if it does not exist)
+cp ~/.vimrc ~/.vimrc.bak
+
+# 2. Download vimrc to a temporary file
+curl -fsSL --proto '=https' -o ~/.vimrc.new https://raw.githubusercontent.com/shotakaha/editors/main/vim/vimrc
+
+# 3. Replace the current vimrc
+mv -f ~/.vimrc.new ~/.vimrc
+```
+
+vim-plug and the plugins are installed automatically on the first run.
+
 ## Documentation
 
 Usage documentation lives in [docs/](docs/) and is built with [Zensical](https://zensical.org/).
