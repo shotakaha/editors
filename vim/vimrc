@@ -2,7 +2,14 @@
 " Repository: https://github.com/shotakaha/editors
 "
 " Install
-" $ curl -fLo ~/.vimrc https://raw.githubusercontent.com/shotakaha/editors/main/vim/vimrc
+" 1. Backup the current vimrc (skip if it does not exist)
+" $ cp ~/.vimrc ~/.vimrc.bak
+"
+" 2. Download vimrc to a temporary file
+" $ curl -fsSL --proto '=https' -o ~/.vimrc.new https://raw.githubusercontent.com/shotakaha/editors/main/vim/vimrc
+"
+" 3. Replace the current vimrc
+" $ mv -f ~/.vimrc.new ~/.vimrc
 " """"""""""""""""""""
 
 set nocompatible
