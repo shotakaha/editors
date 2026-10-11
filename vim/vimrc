@@ -2,9 +2,7 @@
 " Repository: https://github.com/shotakaha/editors
 "
 " Install
-" $ cd $(mktemp -d)
-" $ git clone https://github.com/shotakaha/editors.git
-" $ cp editors/vim/vimrc ~/.vimrc
+" $ curl -fLo ~/.vimrc https://raw.githubusercontent.com/shotakaha/editors/main/vim/vimrc
 " """"""""""""""""""""
 
 set nocompatible
