@@ -160,7 +160,10 @@ endfunction
 set showmode    " Show status line
 set laststatus=2    " Always show status line
 set showcmd    " Show command at status line
-set showcmdloc=tabline
+if exists('&showcmdloc')
+    set showcmdloc=tabline
+    set showtabline=2    " Always show tabline (showcmd is shown there)
+endif
 set statusline=%#StatusLine#\ [%{GetMode()}]\ %F%m\ \(%l,%c\)[%p%%\ %LL]%<%=%r%h%w%y[%{&fileencoding}][%{&fileformat}]%=[b=%n][t=%{&tabstop}][i=%{&shiftwidth}]
 
 " """""
