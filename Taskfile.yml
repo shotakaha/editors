@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+# https://taskfile.dev
+
+# Tasks are defined in templates/Taskfile.yml -- the template this repo ships.
+# This file consumes it, so the template stays exercised by real use.
+#
+# `flatten: true` keeps task names unprefixed (`task docs:build`, not
+# `task shared:docs:build`). It also means a task defined here with the same
+# name as one in the template is an error, not an override -- add or change
+# shared tasks in templates/Taskfile.yml instead.
+
+version: '3'
+
+includes:
+  shared:
+    taskfile: ./templates/Taskfile.yml
+    flatten: true
+    vars:
+      PROJECT_NAME: "doks"

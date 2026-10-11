@@ -1,0 +1,245 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  # Standalone: replace the default with your project name.
+  # Included from a root Taskfile.yml: the caller's `vars:` wins.
+  PROJECT_NAME: '{{.PROJECT_NAME | default "[Project Name]"}}'
+
+tasks:
+  default:
+    desc: List available tasks
+    cmds:
+      - task --list
+    silent: true
+
+  # ============================================================================
+  # Editor
+  # ============================================================================
+
+  code:
+    desc: Open project in VS Code
+    preconditions:
+      - sh: 'command -v code'
+        msg: "code command not found. Run 'Shell Command: Install 'code' command in PATH' from VS Code."
+    cmds:
+      - code .
+
+  # ============================================================================
+  # Development Environment
+  # ============================================================================
+
+  env:setup:
+    desc: Set up development environment
+    cmds:
+      - task: deps:setup
+      - task: pre-commit:setup
+
+  env:clean:
+    desc: Remove .venv and caches
+    cmds:
+      - rm -rf .venv __pycache__ .pytest_cache .ruff_cache
+
+  # ============================================================================
+  # Dependency Management
+  # ============================================================================
+
+  deps:setup:
+    desc: Install all dependencies (all extras + all groups)
+    cmds:
+      - uv sync --all-extras --all-groups
+
+  deps:setup:extras:
+    desc: Install core + all extras
+    cmds:
+      - uv sync --all-extras
+
+  deps:setup:groups:
+    desc: Install core + all dependency groups
+    cmds:
+      - uv sync --all-groups
+
+  deps:outdated:
+    desc: List outdated direct dependencies
+    cmds:
+      - uv tree --outdated --all-groups --depth 1
+
+  deps:update:
+    desc: Update all dependencies
+    cmds:
+      - uv sync --upgrade --all-extras --all-groups
+
+  # ============================================================================
+  # Git
+  # ============================================================================
+
+  status:
+    desc: Show git status
+    cmds:
+      - git status --short --branch
+    silent: true
+
+  log:
+    desc: Show commit history
+    cmds:
+      - git log --oneline --graph --decorate --all
+    silent: true
+
+  log:last-tag:
+    desc: Show commits since the last tag
+    vars:
+      LAST_TAG:
+        sh: git describe --tags --abbrev=0
+    preconditions:
+      - sh: 'git describe --tags --abbrev=0 2>/dev/null'
+        msg: "No tags found"
+    cmds:
+      - git log {{.LAST_TAG}}..HEAD --oneline --graph --decorate
+    silent: true
+
+  diff:
+    desc: Show unstaged changes
+    cmds:
+      - git diff
+    silent: true
+
+  diff:staged:
+    desc: Show staged changes
+    cmds:
+      - git diff --staged
+    silent: true
+
+  diff:last-tag:
+    desc: Show all changes since the last tag
+    vars:
+      LAST_TAG:
+        sh: git describe --tags --abbrev=0
+    preconditions:
+      - sh: 'git describe --tags --abbrev=0 2>/dev/null'
+        msg: "No tags found"
+    cmds:
+      - git diff {{.LAST_TAG}}..HEAD
+    silent: true
+
+  push:
+    desc: Push commits to remote
+    cmds:
+      - git push origin HEAD
+
+  push:tags:
+    desc: Push commits and tags to remote
+    cmds:
+      - git push origin HEAD --tags
+
+  # Release procedure:
+  # 0. task bump:check
+  # 1. task bump:auto (or bump:patch / bump:minor / bump:major)
+  # 2. task push:tags
+  # 3. task docs:release -- X.Y.Z
+  # 4. task push:release -- X.Y.Z
+  push:release:
+    desc: 'Create a GitLab release with release notes (usage: task push:release -- X.Y.Z)'
+    requires:
+      vars: [CLI_ARGS]
+    vars:
+      VERSION: "{{.CLI_ARGS}}"
+      SOURCE: "docs/releases/v{{.CLI_ARGS}}.md"
+    preconditions:
+      - sh: '[ -n "{{.CLI_ARGS}}" ]'
+        msg: "Version required. Usage: task push:release -- X.Y.Z"
+      - sh: 'test -f {{.SOURCE}}'
+        msg: "Release note not found: {{.SOURCE}}"
+    cmds:
+      - glab release create {{.VERSION}} --name "v{{.VERSION}}" --notes-file {{.SOURCE}}
+
+  # ============================================================================
+  # Pre-commit
+  # ============================================================================
+
+  pre-commit:
+    desc: Run pre-commit hooks on all files
+    cmds:
+      - uv run pre-commit run --all-files
+
+  pre-commit:setup:
+    desc: Install pre-commit hooks
+    cmds:
+      - uv run pre-commit install
+
+  pre-commit:update:
+    desc: Update pre-commit hooks to latest versions
+    cmds:
+      - uv run pre-commit autoupdate
+
+  pre-commit:uninstall:
+    desc: Uninstall pre-commit hooks
+    cmds:
+      - uv run pre-commit uninstall
+
+  # ============================================================================
+  # Version Management
+  # ============================================================================
+
+  version:
+    desc: Show current version
+    cmds:
+      - git tag --list | sort -V | tail -n 1
+    silent: true
+
+  bump:check:
+    desc: Preview next version bump
+    cmds:
+      - uv run cz bump --check-consistency --changelog --dry-run
+
+  bump:auto:
+    desc: Bump version (auto-detect from commits)
+    cmds:
+      - uv run cz bump --check-consistency --changelog
+
+  bump:patch:
+    desc: Bump patch version
+    cmds:
+      - uv run cz bump --check-consistency --changelog --increment patch
+
+  bump:minor:
+    desc: Bump minor version
+    cmds:
+      - uv run cz bump --check-consistency --changelog --increment minor
+
+  bump:major:
+    desc: Bump major version
+    cmds:
+      - uv run cz bump --check-consistency --changelog --increment major
+
+  # ============================================================================
+  # Documentation
+  # ============================================================================
+
+  docs:serve:
+    desc: Serve documentation locally (http://localhost:8000)
+    cmds:
+      - uv run zensical serve --open
+
+  docs:build:
+    desc: Build documentation
+    cmds:
+      - uv run zensical build
+
+  docs:release:
+    desc: 'Scaffold a release note from template (usage: task docs:release -- X.Y.Z)'
+    requires:
+      vars: [CLI_ARGS]
+    vars:
+      VERSION: "{{.CLI_ARGS}}"
+      SOURCE: "templates/release.md"
+      TARGET: "docs/releases/v{{.CLI_ARGS}}.md"
+    preconditions:
+      - sh: '[ -n "{{.CLI_ARGS}}" ]'
+        msg: "Version required. Usage: task docs:release -- X.Y.Z"
+      - sh: '[ ! -f "{{.TARGET}}" ]'
+        msg: "Release note already exists: {{.TARGET}}"
+    cmds:
+      - cp "{{.SOURCE}}" "{{.TARGET}}"
+      - echo "Created {{.TARGET}}. Please edit the file to add release notes."
