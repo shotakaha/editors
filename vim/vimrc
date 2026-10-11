@@ -239,14 +239,6 @@ nnoremap <leader>sv :source $MYVIMRC<CR>
 " C-c to exit q:
 nnoremap Q q:
 
-" Fix Y to copy whole line
-" default: Y y$
-nnoremap Y yy
-
-" Fix D to delete whole line
-" default: D d$
-nnoremap D dd
-
 " Search
 " n: forward search
 " N: backward search
@@ -371,6 +363,9 @@ call AddEmacsKey('<C-k>', 'd$')
 
 " C-w: kill-region
 call AddEmacsKey('<C-w>', '"_d')
+
+" M-w: kill-ring-save
+call AddEmacsKey('<M-w>', 'y')
 
 " M-<: beginning of the file
 call AddEmacsKey('<M-<>', 'gg')
