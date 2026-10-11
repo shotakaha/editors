@@ -38,6 +38,11 @@
       "type": "registry"
     }
   },
+  "terminal": {
+    "shell": {
+      "program": "fish"
+    }
+  },
   "base_keymap": "Emacs",
   "ui_font_size": 16,
   "buffer_font_size": 15,
