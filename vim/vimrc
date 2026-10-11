@@ -76,8 +76,10 @@ set showmatch
 " Foldings
 set foldmethod=indent
 set foldlevel=99
-nnoremap <Tab> za    " Toggle fold/unfold
-nnoremap <S-Tab> zA  " Toggle fold/unfold recursively
+" Tab: toggle fold/unfold (overrides C-i, jump forward)
+" S-Tab: toggle fold/unfold recursively
+nnoremap <Tab> za
+nnoremap <S-Tab> zA
 
 " Backups
 set backup
