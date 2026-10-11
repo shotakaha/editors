@@ -52,7 +52,13 @@ set expandtab
 set smartindent
 set autoindent
 " save
-autocmd BufWritePre * :%s/\s+$//e    " Remove extra spaces
+" Remove trailing spaces (keep cursor position and search history)
+function! TrimTrailingSpaces()
+    let l:view = winsaveview()
+    keeppatterns %s/\s\+$//e
+    call winrestview(l:view)
+endfunction
+autocmd BufWritePre * call TrimTrailingSpaces()
 " margins
 set scrolloff=8
 set sidescrolloff=8
