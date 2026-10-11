@@ -90,6 +90,13 @@ nnoremap <Tab> za
 nnoremap <S-Tab> zA
 
 " Backups
+" Create the directories if they do not exist
+for s:dir in ['backup', 'swap', 'undo']
+    let s:path = expand('~/.vim/' . s:dir)
+    if !isdirectory(s:path)
+        call mkdir(s:path, 'p')
+    endif
+endfor
 set backup
 set backupdir=~/.vim/backup//
 set directory=~/.vim/swap//
