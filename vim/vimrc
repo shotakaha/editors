@@ -157,7 +157,7 @@ function! GetMode()
     endif
 endfunction
 
-set showmode    " Show status line
+set noshowmode    " Hide mode at command line (shown at status line)
 set laststatus=2    " Always show status line
 set showcmd    " Show command at status line
 if exists('&showcmdloc')
