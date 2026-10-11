@@ -346,7 +346,7 @@ call AddEmacsKey('<C-w>', '"_d')
 call AddEmacsKey('<M-<>', 'gg')
 
 " M->: end of the file
-call AddEmacsKey('<M->', 'G')
+call AddEmacsKey('<M->>', 'G')
 
 " C-v: page down
 call AddEmacsKey('<C-v>', '<PageDown>')
