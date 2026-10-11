@@ -1,11 +1,10 @@
 " """"""""""""""""""""
-" Gist: https://gist.github.com/shotakaha/39fa568a150084380a256b18b647612c
+" Repository: https://github.com/shotakaha/editors
 "
 " Install
-" $ cd ~/workspace
-" $ git clone https://gist.github.com/shotakaha/39fa568a150084380a256b18b647612c
-" $ cd 39fa568a150084380a256b18b647612c
-" $ cp vimrc ~/.vimrc
+" $ cd $(mktemp -d)
+" $ git clone https://github.com/shotakaha/editors.git
+" $ cp editors/vim/vimrc ~/.vimrc
 " """"""""""""""""""""
 
 set nocompatible
