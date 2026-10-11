@@ -416,7 +416,7 @@ call AddEmacsKey('<C-;>', ':CommentToggle<CR>')
 call AddEmacsKey('<C-x><C-e>', ':echo<SPACE>')
 
 " C-x C-m: list functions
-call AddEmacsKey('<C-x><C-m>', 'function<CR>')
+call AddEmacsKey('<C-x><C-m>', ':function<CR>')
 
 " C-x C-n: list variables
 call AddEmacsKey('<C-x><C-n>', ':let<CR>')
