@@ -109,6 +109,8 @@ set undofile
 " """"""""""""""""""""
 " Status Line
 "
+" Use vim-airline if installed, otherwise use the custom status line below
+"
 " [Left]
 " 1. mode    %{mode()}
 " 2. filename  %F
@@ -158,13 +160,16 @@ function! GetMode()
 endfunction
 
 set noshowmode    " Hide mode at command line (shown at status line)
+let s:has_airline = exists('g:plugs') && has_key(g:plugs, 'vim-airline') && isdirectory(g:plugs['vim-airline'].dir)
+if !s:has_airline
+    set statusline=%#StatusLine#\ [%{GetMode()}]\ %F%m\ \(%l,%c\)[%p%%\ %LL]%<%=%r%h%w%y[%{&fileencoding}][%{&fileformat}]%=[b=%n][t=%{&tabstop}][i=%{&shiftwidth}]
+endif
 set laststatus=2    " Always show status line
 set showcmd    " Show command at status line
 if exists('&showcmdloc')
     set showcmdloc=tabline
     set showtabline=2    " Always show tabline (showcmd is shown there)
 endif
-set statusline=%#StatusLine#\ [%{GetMode()}]\ %F%m\ \(%l,%c\)[%p%%\ %LL]%<%=%r%h%w%y[%{&fileencoding}][%{&fileformat}]%=[b=%n][t=%{&tabstop}][i=%{&shiftwidth}]
 
 " """""
 " Keybinds
