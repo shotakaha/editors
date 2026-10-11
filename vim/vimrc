@@ -47,7 +47,14 @@ set wildmode=longest:full,full
 set cursorline    " Highlight cursor position (row)
 set cursorcolumn    " Highlight cursor position (column)
 " register
-set clipboard=unnamedplus    " Use system clipboard for unnamed register
+" Use system clipboard for unnamed register (if Vim is built with +clipboard)
+if has('clipboard')
+    if has('macunix')
+        set clipboard=unnamed
+    else
+        set clipboard=unnamedplus
+    endif
+endif
 " search
 set ignorecase
 set smartcase
