@@ -65,7 +65,6 @@ set incsearch
 set tabstop=4
 set shiftwidth=4
 set expandtab
-set smartindent
 set autoindent
 " save
 " Remove trailing spaces (keep cursor position and search history)
