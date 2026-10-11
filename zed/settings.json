@@ -36,10 +36,6 @@
         "model": "sonnet"
       },
       "type": "registry"
-    },
-    "claude-acp-custom": {
-      "type": "custom",
-      "command": "/opt/homebrew/bin/claude"
     }
   },
   "base_keymap": "Emacs",
