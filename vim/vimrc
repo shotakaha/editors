@@ -162,8 +162,6 @@ set statusline=%#StatusLine#\ [%{GetMode()}]\ %F%m\ \(%l,%c\)[%p%%\ %LL]%<%=%r%h
 nnoremap <C-x><C-l> :nmap<CR>
 vnoremap <C-x><C-l> :vmap<CR>
 xnoremap <C-x><C-l> :xmap<CR>
-inoremap <C-x><C-l> :imap<CR>
-cnoremap <C-x><C-l> :cmap<CR>
 
 " Modify Keymaps
 " nnoremap: normal mode
