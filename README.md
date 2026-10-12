@@ -51,6 +51,16 @@ mv -f ~/.emacs.d/init.el.new ~/.emacs.d/init.el
 mv -f ~/.emacs.d/early-init.el.new ~/.emacs.d/early-init.el
 ```
 
+Emacs looks for the configuration in the following order and uses the first one that exists:
+
+1. `~/.emacs`
+2. `~/.emacs.d/`
+3. `~/.config/emacs/` (XDG, Emacs 27 or later)
+
+The steps above use `~/.emacs.d/`.
+On a modern environment, `~/.config/emacs/` (XDG compliant) is recommended because it keeps the configuration together with other tools under `~/.config/`.
+To use it, replace the paths and make sure `~/.emacs` and `~/.emacs.d/` do not exist, otherwise they take precedence.
+
 Packages are installed from MELPA automatically on the first run.
 Run `M-x nerd-icons-install-fonts` once to install the icon fonts.
 
