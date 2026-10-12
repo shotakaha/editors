@@ -16,7 +16,7 @@
 (load custom-file 'noerror 'nomessage)
 
 ;; --------------------------------
-;; 基本設定
+;; Basic settings
 ;; --------------------------------
 (use-package emacs
   :ensure nil
@@ -32,7 +32,7 @@
   :bind
   (("C-h" . delete-backward-char)))
 
-;; 履歴の保存
+;; Save history
 (use-package savehist
   :ensure nil
   :init (savehist-mode 1))
@@ -45,7 +45,7 @@
   :ensure nil
   :init (save-place-mode 1))
 
-;; server (emacsclient で接続できるようにする)
+;; server (allow connections via emacsclient)
 (use-package server
   :ensure nil
   :config
@@ -97,7 +97,7 @@
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
-;; nerd-icons (初回のみ M-x nerd-icons-install-fonts)
+;; nerd-icons (run M-x nerd-icons-install-fonts on first use only)
 (use-package nerd-icons)
 
 ;; doom-modeline
