@@ -31,6 +31,17 @@ mv -f ~/.vimrc.new ~/.vimrc
 
 vim-plug and the plugins are installed automatically on the first run.
 
+Vim looks for the configuration in the following order and uses the first one that exists:
+
+1. `~/.vimrc`
+2. `~/.vim/vimrc`
+3. `$XDG_CONFIG_HOME/vim/vimrc` (`~/.config/vim/vimrc` by default, Vim 9.1.0327 or later)
+
+The steps above use `~/.vimrc`.
+On a modern environment, `~/.config/vim/` (XDG compliant) is recommended because it keeps the configuration together with other tools under `~/.config/`.
+To use it, replace the paths and make sure `~/.vimrc` and `~/.vim/` do not exist, otherwise they take precedence.
+Note that [vim/vimrc](vim/vimrc) hardcodes `~/.vim/` for vim-plug and the backup, swap and undo directories, so update those paths as well.
+
 ### Emacs
 
 The Emacs configuration targets Emacs 31 and uses the built-in package.el and use-package.
