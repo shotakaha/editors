@@ -19,8 +19,8 @@ The Vim configuration uses [vim-plug](https://github.com/junegunn/vim-plug) for 
 Installation steps are written at the top of [vim/vimrc](vim/vimrc).
 
 ```sh
-# 0. Set the install path (use ~/.config/vim/vimrc for XDG)
-VIMRC=~/.vimrc
+# 0. Set the install path (use ~/.vimrc for the legacy location)
+VIMRC=~/.config/vim/vimrc
 
 # 1. Backup the current vimrc (skip if it does not exist)
 cp "$VIMRC" "$VIMRC.bak"
@@ -41,9 +41,9 @@ Vim looks for the configuration in the following order and uses the first one th
 2. `~/.vim/vimrc`
 3. `$XDG_CONFIG_HOME/vim/vimrc` (`~/.config/vim/vimrc` by default, Vim 9.1.0327 or later)
 
-The steps above use `~/.vimrc`.
-On a modern environment, `~/.config/vim/` (XDG compliant) is recommended because it keeps the configuration together with other tools under `~/.config/`.
-To use it, change `VIMRC` and make sure `~/.vimrc` and `~/.vim/` do not exist, otherwise they take precedence.
+The steps above use `~/.config/vim/` (XDG compliant), which is recommended on a modern environment because it keeps the configuration together with other tools under `~/.config/`.
+Make sure `~/.vimrc` and `~/.vim/` do not exist, otherwise they take precedence.
+For an older Vim, change `VIMRC` to `~/.vimrc`.
 [vim/vimrc](vim/vimrc) detects its own location, so vim-plug and the backup, swap and undo directories follow it without further changes.
 
 ### Emacs
@@ -52,8 +52,8 @@ The Emacs configuration targets Emacs 31 and uses the built-in package.el and us
 It sets up a minimal completion UI (Vertico, Orderless, Consult, Marginalia, Corfu, Cape) and Doom Modeline.
 
 ```sh
-# 0. Set the install directory (use ~/.config/emacs for XDG)
-EMACS_DIR=~/.emacs.d
+# 0. Set the install directory (use ~/.emacs.d for the legacy location)
+EMACS_DIR=~/.config/emacs
 
 # 1. Backup the current configuration (skip if it does not exist)
 cp "$EMACS_DIR/init.el" "$EMACS_DIR/init.el.bak"
@@ -75,9 +75,9 @@ Emacs looks for the configuration in the following order and uses the first one 
 2. `~/.emacs.d/`
 3. `~/.config/emacs/` (XDG, Emacs 27 or later)
 
-The steps above use `~/.emacs.d/`.
-On a modern environment, `~/.config/emacs/` (XDG compliant) is recommended because it keeps the configuration together with other tools under `~/.config/`.
-To use it, change `EMACS_DIR` and make sure `~/.emacs` and `~/.emacs.d/` do not exist, otherwise they take precedence.
+The steps above use `~/.config/emacs/` (XDG compliant), which is recommended on a modern environment because it keeps the configuration together with other tools under `~/.config/`.
+Make sure `~/.emacs` and `~/.emacs.d/` do not exist, otherwise they take precedence.
+For an older Emacs, change `EMACS_DIR` to `~/.emacs.d`.
 
 Packages are installed from MELPA automatically on the first run.
 Run `M-x nerd-icons-install-fonts` once to install the icon fonts.
