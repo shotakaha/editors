@@ -19,14 +19,18 @@ The Vim configuration uses [vim-plug](https://github.com/junegunn/vim-plug) for 
 Installation steps are written at the top of [vim/vimrc](vim/vimrc).
 
 ```sh
+# 0. Set the install path (use ~/.config/vim/vimrc for XDG)
+VIMRC=~/.vimrc
+
 # 1. Backup the current vimrc (skip if it does not exist)
-cp ~/.vimrc ~/.vimrc.bak
+cp "$VIMRC" "$VIMRC.bak"
 
 # 2. Download vimrc to a temporary file
-curl -fsSL --proto '=https' -o ~/.vimrc.new https://raw.githubusercontent.com/shotakaha/editors/main/vim/vimrc
+mkdir -p "$(dirname "$VIMRC")"
+curl -fsSL --proto '=https' -o "$VIMRC.new" https://raw.githubusercontent.com/shotakaha/editors/main/vim/vimrc
 
 # 3. Replace the current vimrc
-mv -f ~/.vimrc.new ~/.vimrc
+mv -f "$VIMRC.new" "$VIMRC"
 ```
 
 vim-plug and the plugins are installed automatically on the first run.
@@ -39,7 +43,7 @@ Vim looks for the configuration in the following order and uses the first one th
 
 The steps above use `~/.vimrc`.
 On a modern environment, `~/.config/vim/` (XDG compliant) is recommended because it keeps the configuration together with other tools under `~/.config/`.
-To use it, replace the paths and make sure `~/.vimrc` and `~/.vim/` do not exist, otherwise they take precedence.
+To use it, change `VIMRC` and make sure `~/.vimrc` and `~/.vim/` do not exist, otherwise they take precedence.
 [vim/vimrc](vim/vimrc) detects its own location, so vim-plug and the backup, swap and undo directories follow it without further changes.
 
 ### Emacs
@@ -48,18 +52,21 @@ The Emacs configuration targets Emacs 31 and uses the built-in package.el and us
 It sets up a minimal completion UI (Vertico, Orderless, Consult, Marginalia, Corfu, Cape) and Doom Modeline.
 
 ```sh
+# 0. Set the install directory (use ~/.config/emacs for XDG)
+EMACS_DIR=~/.emacs.d
+
 # 1. Backup the current configuration (skip if it does not exist)
-cp ~/.emacs.d/init.el ~/.emacs.d/init.el.bak
-cp ~/.emacs.d/early-init.el ~/.emacs.d/early-init.el.bak
+cp "$EMACS_DIR/init.el" "$EMACS_DIR/init.el.bak"
+cp "$EMACS_DIR/early-init.el" "$EMACS_DIR/early-init.el.bak"
 
 # 2. Download the files to temporary files
-mkdir -p ~/.emacs.d
-curl -fsSL --proto '=https' -o ~/.emacs.d/init.el.new https://raw.githubusercontent.com/shotakaha/editors/main/emacs/init.el
-curl -fsSL --proto '=https' -o ~/.emacs.d/early-init.el.new https://raw.githubusercontent.com/shotakaha/editors/main/emacs/early-init.el
+mkdir -p "$EMACS_DIR"
+curl -fsSL --proto '=https' -o "$EMACS_DIR/init.el.new" https://raw.githubusercontent.com/shotakaha/editors/main/emacs/init.el
+curl -fsSL --proto '=https' -o "$EMACS_DIR/early-init.el.new" https://raw.githubusercontent.com/shotakaha/editors/main/emacs/early-init.el
 
 # 3. Replace the current files
-mv -f ~/.emacs.d/init.el.new ~/.emacs.d/init.el
-mv -f ~/.emacs.d/early-init.el.new ~/.emacs.d/early-init.el
+mv -f "$EMACS_DIR/init.el.new" "$EMACS_DIR/init.el"
+mv -f "$EMACS_DIR/early-init.el.new" "$EMACS_DIR/early-init.el"
 ```
 
 Emacs looks for the configuration in the following order and uses the first one that exists:
@@ -70,7 +77,7 @@ Emacs looks for the configuration in the following order and uses the first one 
 
 The steps above use `~/.emacs.d/`.
 On a modern environment, `~/.config/emacs/` (XDG compliant) is recommended because it keeps the configuration together with other tools under `~/.config/`.
-To use it, replace the paths and make sure `~/.emacs` and `~/.emacs.d/` do not exist, otherwise they take precedence.
+To use it, change `EMACS_DIR` and make sure `~/.emacs` and `~/.emacs.d/` do not exist, otherwise they take precedence.
 
 Packages are installed from MELPA automatically on the first run.
 Run `M-x nerd-icons-install-fonts` once to install the icon fonts.
@@ -80,17 +87,21 @@ Run `M-x nerd-icons-install-fonts` once to install the icon fonts.
 The Zed configuration uses the Emacs base keymap and switches the theme with the system appearance.
 
 ```sh
+# 0. Set the install directory
+ZED_DIR=~/.config/zed
+
 # 1. Backup the current settings (skip if they do not exist)
-cp ~/.config/zed/settings.json ~/.config/zed/settings.json.bak
-cp ~/.config/zed/keymap.json ~/.config/zed/keymap.json.bak
+cp "$ZED_DIR/settings.json" "$ZED_DIR/settings.json.bak"
+cp "$ZED_DIR/keymap.json" "$ZED_DIR/keymap.json.bak"
 
 # 2. Download the files to temporary files
-curl -fsSL --proto '=https' -o ~/.config/zed/settings.json.new https://raw.githubusercontent.com/shotakaha/editors/main/zed/settings.json
-curl -fsSL --proto '=https' -o ~/.config/zed/keymap.json.new https://raw.githubusercontent.com/shotakaha/editors/main/zed/keymap.json
+mkdir -p "$ZED_DIR"
+curl -fsSL --proto '=https' -o "$ZED_DIR/settings.json.new" https://raw.githubusercontent.com/shotakaha/editors/main/zed/settings.json
+curl -fsSL --proto '=https' -o "$ZED_DIR/keymap.json.new" https://raw.githubusercontent.com/shotakaha/editors/main/zed/keymap.json
 
 # 3. Replace the current files
-mv -f ~/.config/zed/settings.json.new ~/.config/zed/settings.json
-mv -f ~/.config/zed/keymap.json.new ~/.config/zed/keymap.json
+mv -f "$ZED_DIR/settings.json.new" "$ZED_DIR/settings.json"
+mv -f "$ZED_DIR/keymap.json.new" "$ZED_DIR/keymap.json"
 ```
 
 ## Documentation
