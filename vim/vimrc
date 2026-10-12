@@ -14,11 +14,20 @@
 
 set nocompatible
 
+" Vim directory (the only place that depends on the vimrc location)
+" ~/.vimrc            -> ~/.vim
+" ~/.vim/vimrc        -> ~/.vim
+" ~/.config/vim/vimrc -> ~/.config/vim
+let s:vimdir = expand('<sfile>:p:h')
+if s:vimdir ==# expand('~')
+    let s:vimdir = expand('~/.vim')
+endif
+
 " """"""""""""""""""""
 " Plugins
 " """"""""""""""""""""
 " Install vim-plug if not installed
-let s:plug_path = expand('~/.vim/autoload/plug.vim')
+let s:plug_path = s:vimdir . '/autoload/plug.vim'
 if empty(glob(s:plug_path))
     silent execute '!curl -fLo ' . s:plug_path . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
@@ -103,15 +112,15 @@ nnoremap <S-Tab> zA
 " Backups
 " Create the directories if they do not exist
 for s:dir in ['backup', 'swap', 'undo']
-    let s:path = expand('~/.vim/' . s:dir)
+    let s:path = s:vimdir . '/' . s:dir
     if !isdirectory(s:path)
         call mkdir(s:path, 'p')
     endif
 endfor
 set backup
-set backupdir=~/.vim/backup//
-set directory=~/.vim/swap//
-set undodir=~/.vim/undo//
+let &backupdir = s:vimdir . '/backup//'
+let &directory = s:vimdir . '/swap//'
+let &undodir = s:vimdir . '/undo//'
 set undofile
 "set history=1000
 "set undolevels=1000

@@ -40,7 +40,7 @@ Vim looks for the configuration in the following order and uses the first one th
 The steps above use `~/.vimrc`.
 On a modern environment, `~/.config/vim/` (XDG compliant) is recommended because it keeps the configuration together with other tools under `~/.config/`.
 To use it, replace the paths and make sure `~/.vimrc` and `~/.vim/` do not exist, otherwise they take precedence.
-Note that [vim/vimrc](vim/vimrc) hardcodes `~/.vim/` for vim-plug and the backup, swap and undo directories, so update those paths as well.
+[vim/vimrc](vim/vimrc) detects its own location, so vim-plug and the backup, swap and undo directories follow it without further changes.
 
 ### Emacs
 
