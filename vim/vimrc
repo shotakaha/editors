@@ -378,11 +378,15 @@ inoremap <C-r> <Esc>?
 cnoremap <C-r> <C-c>?
 
 " C-y: yank
+" normal: paste before the cursor and move to the end of the pasted text
+" visual: replace the selection without overwriting the register
+nnoremap <C-y> gP
+xnoremap <C-y> P
+inoremap <C-y> <C-r>"
+cnoremap <C-y> <C-r>"
+
+" SPC p: paste from the system clipboard
 nnoremap <leader>p "+p
-nnoremap <C-y> p
-xnoremap <C-y> p
-inoremap <C-y> <C-r>+
-cnoremap <C-y> <C-r>+
 
 " C-/: undo
 call AddEmacsKey('<C-/>', 'u')
