@@ -34,7 +34,10 @@ endif
 let s:plug_path = s:vimdir . '/autoload/plug.vim'
 if empty(glob(s:plug_path))
     silent execute '!curl -fLo ' . s:plug_path . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    augroup vimrc_plug
+        autocmd!
+        autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    augroup END
 endif
 
 call plug#begin()
@@ -85,12 +88,21 @@ set expandtab
 set autoindent
 " save
 " Remove trailing spaces (keep cursor position and search history)
+" Skip filetypes where trailing spaces are meaningful
+" (markdown: line break, diff: empty context line)
+let g:trim_ignore_filetypes = ['markdown', 'diff']
 function! TrimTrailingSpaces()
+    if index(g:trim_ignore_filetypes, &filetype) >= 0
+        return
+    endif
     let l:view = winsaveview()
     keeppatterns %s/\s\+$//e
     call winrestview(l:view)
 endfunction
-autocmd BufWritePre * call TrimTrailingSpaces()
+augroup vimrc_trim
+    autocmd!
+    autocmd BufWritePre * call TrimTrailingSpaces()
+augroup END
 " margins
 set scrolloff=8
 set sidescrolloff=8
@@ -273,8 +285,8 @@ vnoremap <S-Tab> <gv
 
 " Fix half page scroll
 " zz    center the cursor
+" (C-d is used as delete in Emacs-like Keybinds)
 nnoremap <C-u> <C-u>zz
-nnoremap <C-d> <C-d>zz
 
 " Fix undo / redo
 " make U as :redo (C-r)
@@ -436,6 +448,33 @@ call AddEmacsKey('<C-x>3', ':split<CR>')
 
 " C-x 0: delete window
 call AddEmacsKey('<C-x>0', '<C-w>c')
+
+" """"""""""""""""""""
+" Vim binds (leader)
+"
+" Emacs-like keybinds above shadow some Vim keys in normal mode.
+" Those Vim features are available under the leader key.
+" """"""""""""""""""""
+
+" SPC d: half page down (C-d is delete)
+nnoremap <leader>d <C-d>zz
+
+" SPC v: visual block (C-v is page down)
+nnoremap <leader>v <C-v>
+
+" SPC +: increment number (C-a is beginning of the line)
+nnoremap <leader>+ <C-a>
+
+" SPC -: decrement number (C-x is the prefix)
+nnoremap <leader>- <C-x>
+
+" SPC g: show file information (C-g is keyboard-quit)
+nnoremap <leader>g <C-g>
+
+" SPC c: window commands (C-w is kill-region)
+" SPC c h/j/k/l: move to the window
+" SPC c =: equalize window sizes
+nnoremap <leader>c <C-w>
 
 " """"""""""""""""""""
 " Toggle
