@@ -440,11 +440,11 @@ call AddEmacsKey('<C-x>o', '<C-w>w')
 " C-x 1: delete other windows
 call AddEmacsKey('<C-x>1', ':only<CR>')
 
-" C-x 2: split window vertically
-call AddEmacsKey('<C-x>2', ':vsplit<CR>')
+" C-x 2: split window below (stacked)
+call AddEmacsKey('<C-x>2', ':split<CR>')
 
-" C-x 3: split window horizontally
-call AddEmacsKey('<C-x>3', ':split<CR>')
+" C-x 3: split window right (side by side)
+call AddEmacsKey('<C-x>3', ':vsplit<CR>')
 
 " C-x 0: delete window
 call AddEmacsKey('<C-x>0', '<C-w>c')
