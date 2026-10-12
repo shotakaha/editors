@@ -10,7 +10,8 @@ This repository stores the configuration files for the editors I use, such as VS
 | --- | --- | --- |
 | Vim | [vim/vimrc](vim/vimrc) | Available |
 | Zed | [zed/settings.json](zed/settings.json), [zed/keymap.json](zed/keymap.json) | Available |
-| VS Code, Emacs, ... | | Planned |
+| Emacs | [emacs/init.el](emacs/init.el), [emacs/early-init.el](emacs/early-init.el) | Available |
+| VS Code, ... | | Planned |
 
 ### Vim
 
@@ -29,6 +30,29 @@ mv -f ~/.vimrc.new ~/.vimrc
 ```
 
 vim-plug and the plugins are installed automatically on the first run.
+
+### Emacs
+
+The Emacs configuration targets Emacs 31 and uses the built-in package.el and use-package.
+It sets up a minimal completion UI (Vertico, Orderless, Consult, Marginalia, Corfu, Cape) and Doom Modeline.
+
+```sh
+# 1. Backup the current configuration (skip if it does not exist)
+cp ~/.emacs.d/init.el ~/.emacs.d/init.el.bak
+cp ~/.emacs.d/early-init.el ~/.emacs.d/early-init.el.bak
+
+# 2. Download the files to temporary files
+mkdir -p ~/.emacs.d
+curl -fsSL --proto '=https' -o ~/.emacs.d/init.el.new https://raw.githubusercontent.com/shotakaha/editors/main/emacs/init.el
+curl -fsSL --proto '=https' -o ~/.emacs.d/early-init.el.new https://raw.githubusercontent.com/shotakaha/editors/main/emacs/early-init.el
+
+# 3. Replace the current files
+mv -f ~/.emacs.d/init.el.new ~/.emacs.d/init.el
+mv -f ~/.emacs.d/early-init.el.new ~/.emacs.d/early-init.el
+```
+
+Packages are installed from MELPA automatically on the first run.
+Run `M-x nerd-icons-install-fonts` once to install the icon fonts.
 
 ### Zed
 
