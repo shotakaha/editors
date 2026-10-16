@@ -57,7 +57,8 @@ Vim looks for the configuration in the following order and uses the first one th
 `~/.config/vim/` (XDG compliant) is recommended on a modern environment because it keeps the configuration together with other tools under `~/.config/`.
 Make sure `~/.vimrc` and `~/.vim/` do not exist, otherwise they take precedence.
 Vim older than 9.1.0327 does not read `~/.config/vim/`, so use `vim8/vimrc` with `~/.vimrc`.
-Both files detect their own location, so vim-plug and the backup, swap and undo directories follow it without further changes.
+`vim9/vimrc` detects its own location, so vim-plug and the backup, swap and undo directories follow it without further changes.
+`vim8/vimrc` always uses `~/.vim/` for them.
 
 ### Emacs
 
