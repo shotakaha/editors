@@ -10,7 +10,7 @@ This repository stores the configuration files for the editors I use, such as VS
 | --- | --- | --- |
 | Vim | [vim9/vimrc](vim9/vimrc), [vim8/vimrc](vim8/vimrc) | Available |
 | Zed | [zed/settings.json](zed/settings.json), [zed/keymap.json](zed/keymap.json) | Available |
-| Emacs | [emacs31/init.el](emacs31/init.el), [emacs31/early-init.el](emacs31/early-init.el) | Available |
+| Emacs | [emacs31/](emacs31/), [emacs29/](emacs29/) | Available |
 | VS Code, ... | | Planned |
 
 ### Shell
@@ -26,7 +26,9 @@ set VIMRC ~/.config/vim/vimrc
 # set SRC vim8
 # set VIMRC ~/.vimrc
 
-# Emacs
+# Emacs (set one of them for SRC)
+set SRC emacs31
+# set SRC emacs29
 set EMACS_DIR ~/.config/emacs
 
 # Zed
@@ -85,11 +87,23 @@ Vim older than 9.1.0327 does not read `~/.config/vim/`, so use `vim8/vimrc` with
 
 ### Emacs
 
-The Emacs configuration targets Emacs 31 and uses the built-in package.el and use-package.
+The Emacs configuration uses the built-in use-package.
 It sets up a minimal completion UI (Vertico, Orderless, Consult, Marginalia, Corfu, Cape) and Doom Modeline.
+There are two versions of the configuration.
+
+| Directory | Target | Package manager |
+| --- | --- | --- |
+| [emacs31/](emacs31/) | Emacs 31 | package.el (built-in) |
+| [emacs29/](emacs29/) | Emacs 29 or later | [straight.el](https://github.com/radian-software/straight.el) (bootstrapped in `early-init.el`) |
+
+Each directory has `init.el` and `early-init.el`.
 
 ```sh
-# 0. Set the install directory (use ~/.emacs.d for the legacy location)
+# 0. Choose the version and the install directory (use ~/.emacs.d for the legacy location)
+#    Emacs 31
+SRC=emacs31
+#    Emacs 29 or later
+# SRC=emacs29
 EMACS_DIR=~/.config/emacs
 URL=https://raw.githubusercontent.com/shotakaha/editors/main
 
@@ -99,8 +113,8 @@ cp "$EMACS_DIR/early-init.el" "$EMACS_DIR/early-init.el.bak"
 
 # 2. Download the files to temporary files
 mkdir -p "$EMACS_DIR"
-curl -fsSL --proto '=https' -o "$EMACS_DIR/init.el.new" "$URL/emacs31/init.el"
-curl -fsSL --proto '=https' -o "$EMACS_DIR/early-init.el.new" "$URL/emacs31/early-init.el"
+curl -fsSL --proto '=https' -o "$EMACS_DIR/init.el.new" "$URL/$SRC/init.el"
+curl -fsSL --proto '=https' -o "$EMACS_DIR/early-init.el.new" "$URL/$SRC/early-init.el"
 
 # 3. Replace the current files
 mv -f "$EMACS_DIR/init.el.new" "$EMACS_DIR/init.el"
@@ -117,7 +131,7 @@ The steps above use `~/.config/emacs/` (XDG compliant), which is recommended on 
 Make sure `~/.emacs` and `~/.emacs.d/` do not exist, otherwise they take precedence.
 For an older Emacs, change `EMACS_DIR` to `~/.emacs.d`.
 
-Packages are installed from MELPA automatically on the first run.
+Packages are installed automatically on the first run (MELPA for `emacs31/`, and git clones by straight.el for `emacs29/`, which also needs `git`).
 Run `M-x nerd-icons-install-fonts` once to install the icon fonts.
 
 ### Zed
