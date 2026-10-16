@@ -16,7 +16,7 @@ includes:
     taskfile: ./templates/Taskfile.yml
     flatten: true
     vars:
-      PROJECT_NAME: "doks"
+      PROJECT_NAME: "editors"
 
 vars:
   # XDG Base Directory (https://specifications.freedesktop.org/basedir-spec/latest/)

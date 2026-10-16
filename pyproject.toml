@@ -1,7 +1,7 @@
 [project]
-name = "doks"
-description = "A skeleton repository for Python + uv + zensical"
-version = "0.1.0"
+name = "editors"
+description = "My editors configurations."
+version = "0.0.1"
 requires-python = ">=3.14"
 dependencies = []
 
