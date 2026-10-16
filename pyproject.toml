@@ -1,7 +1,7 @@
 [project]
 name = "editors"
 description = "My editors configurations."
-version = "0.0.1"
+version = "0.1.0"
 requires-python = ">=3.14"
 dependencies = []
 
