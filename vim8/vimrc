@@ -1,18 +1,19 @@
 " """"""""""""""""""""
 " Repository: https://github.com/shotakaha/editors
 "
-" For Vim 9.1.0327 or later (Vim 8 users: see vim/vim8rc)
+" For Vim 8.0 or later (Vim 9 users: see vim9/vimrc)
+" XDG location (~/.config/vim) is not supported before Vim 9.1.0327
 "
 " Install
-" 0. Set the install path (use ~/.vimrc for the legacy location)
-" $ VIMRC=~/.config/vim/vimrc
+" 0. Set the install path
+" $ VIMRC=~/.vimrc
 "
 " 1. Backup the current vimrc (skip if it does not exist)
 " $ cp "$VIMRC" "$VIMRC.bak"
 "
 " 2. Download vimrc to a temporary file
 " $ mkdir -p "$(dirname "$VIMRC")"
-" $ curl -fsSL --proto '=https' -o "$VIMRC.new" https://raw.githubusercontent.com/shotakaha/editors/main/vim/vim9rc
+" $ curl -fsSL --proto '=https' -o "$VIMRC.new" https://raw.githubusercontent.com/shotakaha/editors/main/vim8/vimrc
 "
 " 3. Replace the current vimrc
 " $ mv -f "$VIMRC.new" "$VIMRC"
@@ -21,9 +22,8 @@
 set nocompatible
 
 " Vim directory (the only place that depends on the vimrc location)
-" ~/.vimrc            -> ~/.vim
-" ~/.vim/vimrc        -> ~/.vim
-" ~/.config/vim/vimrc -> ~/.config/vim
+" ~/.vimrc     -> ~/.vim
+" ~/.vim/vimrc -> ~/.vim
 let s:vimdir = expand('<sfile>:p:h')
 if s:vimdir ==# expand('~')
     let s:vimdir = expand('~/.vim')

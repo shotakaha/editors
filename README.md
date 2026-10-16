@@ -8,7 +8,7 @@ This repository stores the configuration files for the editors I use, such as VS
 
 | Editor | Configuration | Status |
 | --- | --- | --- |
-| Vim | [vim/vim9rc](vim/vim9rc), [vim/vim8rc](vim/vim8rc) | Available |
+| Vim | [vim9/vimrc](vim9/vimrc), [vim8/vimrc](vim8/vimrc) | Available |
 | Zed | [zed/settings.json](zed/settings.json), [zed/keymap.json](zed/keymap.json) | Available |
 | Emacs | [emacs/init.el](emacs/init.el), [emacs/early-init.el](emacs/early-init.el) | Available |
 | VS Code, ... | | Planned |
@@ -20,18 +20,18 @@ There are two versions of the configuration.
 
 | File | Target |
 | --- | --- |
-| [vim/vim9rc](vim/vim9rc) | Vim 9.1.0327 or later |
-| [vim/vim8rc](vim/vim8rc) | Vim 8.0 or later |
+| [vim9/vimrc](vim9/vimrc) | Vim 9.1.0327 or later |
+| [vim8/vimrc](vim8/vimrc) | Vim 8.0 or later |
 
 Installation steps are written at the top of each file.
 
 ```sh
 # 0. Choose the version and the install path
 #    Vim 9.1.0327 or later (XDG compliant)
-SRC=vim9rc
+SRC=vim9
 VIMRC=~/.config/vim/vimrc
 #    Vim 8.0 or later
-# SRC=vim8rc
+# SRC=vim8
 # VIMRC=~/.vimrc
 
 # 1. Backup the current vimrc (skip if it does not exist)
@@ -39,7 +39,7 @@ cp "$VIMRC" "$VIMRC.bak"
 
 # 2. Download the vimrc to a temporary file
 mkdir -p "$(dirname "$VIMRC")"
-curl -fsSL --proto '=https' -o "$VIMRC.new" "https://raw.githubusercontent.com/shotakaha/editors/main/vim/$SRC"
+curl -fsSL --proto '=https' -o "$VIMRC.new" "https://raw.githubusercontent.com/shotakaha/editors/main/$SRC/vimrc"
 
 # 3. Replace the current vimrc
 mv -f "$VIMRC.new" "$VIMRC"
@@ -55,7 +55,7 @@ Vim looks for the configuration in the following order and uses the first one th
 
 `~/.config/vim/` (XDG compliant) is recommended on a modern environment because it keeps the configuration together with other tools under `~/.config/`.
 Make sure `~/.vimrc` and `~/.vim/` do not exist, otherwise they take precedence.
-Vim older than 9.1.0327 does not read `~/.config/vim/`, so use `vim8rc` with `~/.vimrc`.
+Vim older than 9.1.0327 does not read `~/.config/vim/`, so use `vim8/vimrc` with `~/.vimrc`.
 Both files detect their own location, so vim-plug and the backup, swap and undo directories follow it without further changes.
 
 ### Emacs
