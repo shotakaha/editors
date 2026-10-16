@@ -7,13 +7,14 @@
 " Install
 " 0. Set the install path
 " $ VIMRC=~/.vimrc
+" $ URL=https://raw.githubusercontent.com/shotakaha/editors/main
 "
 " 1. Backup the current vimrc (skip if it does not exist)
 " $ cp "$VIMRC" "$VIMRC.bak"
 "
 " 2. Download vimrc to a temporary file
 " $ mkdir -p "$(dirname "$VIMRC")"
-" $ curl -fsSL --proto '=https' -o "$VIMRC.new" https://raw.githubusercontent.com/shotakaha/editors/main/vim8/vimrc
+" $ curl -fsSL --proto '=https' -o "$VIMRC.new" "$URL/vim8/vimrc"
 "
 " 3. Replace the current vimrc
 " $ mv -f "$VIMRC.new" "$VIMRC"

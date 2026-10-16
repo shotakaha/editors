@@ -33,13 +33,14 @@ VIMRC=~/.config/vim/vimrc
 #    Vim 8.0 or later
 # SRC=vim8
 # VIMRC=~/.vimrc
+URL=https://raw.githubusercontent.com/shotakaha/editors/main
 
 # 1. Backup the current vimrc (skip if it does not exist)
 cp "$VIMRC" "$VIMRC.bak"
 
 # 2. Download the vimrc to a temporary file
 mkdir -p "$(dirname "$VIMRC")"
-curl -fsSL --proto '=https' -o "$VIMRC.new" "https://raw.githubusercontent.com/shotakaha/editors/main/$SRC/vimrc"
+curl -fsSL --proto '=https' -o "$VIMRC.new" "$URL/$SRC/vimrc"
 
 # 3. Replace the current vimrc
 mv -f "$VIMRC.new" "$VIMRC"
@@ -66,6 +67,7 @@ It sets up a minimal completion UI (Vertico, Orderless, Consult, Marginalia, Cor
 ```sh
 # 0. Set the install directory (use ~/.emacs.d for the legacy location)
 EMACS_DIR=~/.config/emacs
+URL=https://raw.githubusercontent.com/shotakaha/editors/main
 
 # 1. Backup the current configuration (skip if it does not exist)
 cp "$EMACS_DIR/init.el" "$EMACS_DIR/init.el.bak"
@@ -73,8 +75,8 @@ cp "$EMACS_DIR/early-init.el" "$EMACS_DIR/early-init.el.bak"
 
 # 2. Download the files to temporary files
 mkdir -p "$EMACS_DIR"
-curl -fsSL --proto '=https' -o "$EMACS_DIR/init.el.new" https://raw.githubusercontent.com/shotakaha/editors/main/emacs/init.el
-curl -fsSL --proto '=https' -o "$EMACS_DIR/early-init.el.new" https://raw.githubusercontent.com/shotakaha/editors/main/emacs/early-init.el
+curl -fsSL --proto '=https' -o "$EMACS_DIR/init.el.new" "$URL/emacs/init.el"
+curl -fsSL --proto '=https' -o "$EMACS_DIR/early-init.el.new" "$URL/emacs/early-init.el"
 
 # 3. Replace the current files
 mv -f "$EMACS_DIR/init.el.new" "$EMACS_DIR/init.el"
@@ -101,6 +103,7 @@ The Zed configuration uses the Emacs base keymap and switches the theme with the
 ```sh
 # 0. Set the install directory
 ZED_DIR=~/.config/zed
+URL=https://raw.githubusercontent.com/shotakaha/editors/main
 
 # 1. Backup the current settings (skip if they do not exist)
 cp "$ZED_DIR/settings.json" "$ZED_DIR/settings.json.bak"
@@ -108,8 +111,8 @@ cp "$ZED_DIR/keymap.json" "$ZED_DIR/keymap.json.bak"
 
 # 2. Download the files to temporary files
 mkdir -p "$ZED_DIR"
-curl -fsSL --proto '=https' -o "$ZED_DIR/settings.json.new" https://raw.githubusercontent.com/shotakaha/editors/main/zed/settings.json
-curl -fsSL --proto '=https' -o "$ZED_DIR/keymap.json.new" https://raw.githubusercontent.com/shotakaha/editors/main/zed/keymap.json
+curl -fsSL --proto '=https' -o "$ZED_DIR/settings.json.new" "$URL/zed/settings.json"
+curl -fsSL --proto '=https' -o "$ZED_DIR/keymap.json.new" "$URL/zed/keymap.json"
 
 # 3. Replace the current files
 mv -f "$ZED_DIR/settings.json.new" "$ZED_DIR/settings.json"
