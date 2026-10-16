@@ -13,6 +13,21 @@ This repository stores the configuration files for the editors I use, such as VS
 | Emacs | [emacs31/](emacs31/), [emacs28/](emacs28/) | Available |
 | VS Code, ... | | Planned |
 
+### Task
+
+In a clone of this repository, [Task](https://taskfile.dev/) installs the configuration files to the XDG paths.
+The existing files are saved as `<file>.bak`.
+
+| Task | Destination |
+| --- | --- |
+| `task install:vim9` | `$XDG_CONFIG_HOME/vim/vimrc` |
+| `task install:emacs31` | `$XDG_CONFIG_HOME/emacs/init.el`, `early-init.el` |
+| `task install:zed` | `$XDG_CONFIG_HOME/zed/settings.json`, `keymap.json` |
+
+`$XDG_CONFIG_HOME` defaults to `~/.config`.
+`install:vim9` and `install:emacs31` stop if the legacy files (`~/.vimrc`, `~/.vim/vimrc`, `~/.emacs`, `~/.emacs.d`) exist, because they take precedence over the XDG paths.
+The older configurations (`vim8/`, `emacs28/`) are installed with the steps below.
+
 ### Shell
 
 The installation steps below are written for bash and zsh.
@@ -87,7 +102,7 @@ Vim older than 9.1.0327 does not read `~/.config/vim/`, so use `vim8/vimrc` with
 
 ### Emacs
 
-The Emacs configuration uses the built-in use-package.
+The Emacs configuration uses use-package.
 It sets up a minimal completion UI (Vertico, Orderless, Consult, Marginalia, Corfu, Cape) and Doom Modeline.
 There are two versions of the configuration.
 
