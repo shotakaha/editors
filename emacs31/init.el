@@ -2,6 +2,7 @@
 
 ;; --------------------------------
 ;; package.el + use-package (built-in)
+;; use-package is built-in since Emacs 29
 ;; --------------------------------
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -52,7 +53,7 @@
   (unless (server-running-p)
     (server-start)))
 
-;; which-key (built-in)
+;; which-key (built-in since Emacs 30)
 (use-package which-key
   :ensure nil
   :init (which-key-mode 1))
