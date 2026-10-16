@@ -33,50 +33,37 @@ tasks:
   install:vim9:
     desc: Install vim9/vimrc to $XDG_CONFIG_HOME/vim/vimrc (Vim 9.1.0327 or later)
     silent: true
+    preconditions:
+      - sh: test ! -e ~/.vimrc
+        msg: "~/.vimrc takes precedence over the XDG path. Move it away first."
+      - sh: test ! -e ~/.vim/vimrc
+        msg: "~/.vim/vimrc takes precedence over the XDG path. Move it away first."
     cmds:
-      - |
-        for f in "$HOME/.vimrc" "$HOME/.vim/vimrc"; do
-          if [ -e "$f" ]; then
-            echo "warning: $f exists and takes precedence over the XDG path" >&2
-          fi
-        done
       - task: install:_file
         vars: {SRC: vim9/vimrc, DST: '{{.XDG_CONFIG_HOME}}/vim/vimrc'}
 
   install:emacs31:
     desc: Install emacs31/ to $XDG_CONFIG_HOME/emacs/ (Emacs 31)
     silent: true
+    preconditions:
+      - sh: test ! -e ~/.emacs
+        msg: "~/.emacs takes precedence over the XDG path. Move it away first."
+      - sh: test ! -e ~/.emacs.d
+        msg: "~/.emacs.d takes precedence over the XDG path. Move it away first."
     cmds:
-      - task: install:_emacs
-        vars: {DIR: emacs31}
+      - for: [init.el, early-init.el]
+        task: install:_file
+        vars: {SRC: 'emacs31/{{.ITEM}}', DST: '{{.XDG_CONFIG_HOME}}/emacs/{{.ITEM}}'}
 
   install:zed:
     desc: Install zed/ settings to $XDG_CONFIG_HOME/zed/
     silent: true
     cmds:
-      - task: install:_file
-        vars: {SRC: zed/settings.json, DST: '{{.XDG_CONFIG_HOME}}/zed/settings.json'}
-      - task: install:_file
-        vars: {SRC: zed/keymap.json, DST: '{{.XDG_CONFIG_HOME}}/zed/keymap.json'}
+      - for: [settings.json, keymap.json]
+        task: install:_file
+        vars: {SRC: 'zed/{{.ITEM}}', DST: '{{.XDG_CONFIG_HOME}}/zed/{{.ITEM}}'}
 
-  # Internal helpers
-  install:_emacs:
-    internal: true
-    requires:
-      vars: [DIR]
-    silent: true
-    cmds:
-      - |
-        for f in "$HOME/.emacs" "$HOME/.emacs.d"; do
-          if [ -e "$f" ]; then
-            echo "warning: $f exists and takes precedence over the XDG path" >&2
-          fi
-        done
-      - task: install:_file
-        vars: {SRC: '{{.DIR}}/init.el', DST: '{{.XDG_CONFIG_HOME}}/emacs/init.el'}
-      - task: install:_file
-        vars: {SRC: '{{.DIR}}/early-init.el', DST: '{{.XDG_CONFIG_HOME}}/emacs/early-init.el'}
-
+  # Internal helper
   install:_file:
     internal: true
     requires:
