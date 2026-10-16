@@ -17,3 +17,77 @@ includes:
     flatten: true
     vars:
       PROJECT_NAME: "doks"
+
+vars:
+  # XDG Base Directory (https://specifications.freedesktop.org/basedir-spec/latest/)
+  XDG_CONFIG_HOME:
+    sh: echo "${XDG_CONFIG_HOME:-$HOME/.config}"
+
+tasks:
+  # ============================================================================
+  # Install the configuration files of each editor
+  #
+  # The existing file is saved as `<file>.bak` before it is replaced.
+  # ============================================================================
+
+  install:vim9:
+    desc: Install vim9/vimrc to $XDG_CONFIG_HOME/vim/vimrc (Vim 9.1.0327 or later)
+    silent: true
+    cmds:
+      - |
+        for f in "$HOME/.vimrc" "$HOME/.vim/vimrc"; do
+          if [ -e "$f" ]; then
+            echo "warning: $f exists and takes precedence over the XDG path" >&2
+          fi
+        done
+      - task: install:_file
+        vars: {SRC: vim9/vimrc, DST: '{{.XDG_CONFIG_HOME}}/vim/vimrc'}
+
+  install:emacs31:
+    desc: Install emacs31/ to $XDG_CONFIG_HOME/emacs/ (Emacs 31)
+    silent: true
+    cmds:
+      - task: install:_emacs
+        vars: {DIR: emacs31}
+
+  install:zed:
+    desc: Install zed/ settings to $XDG_CONFIG_HOME/zed/
+    silent: true
+    cmds:
+      - task: install:_file
+        vars: {SRC: zed/settings.json, DST: '{{.XDG_CONFIG_HOME}}/zed/settings.json'}
+      - task: install:_file
+        vars: {SRC: zed/keymap.json, DST: '{{.XDG_CONFIG_HOME}}/zed/keymap.json'}
+
+  # Internal helpers
+  install:_emacs:
+    internal: true
+    requires:
+      vars: [DIR]
+    silent: true
+    cmds:
+      - |
+        for f in "$HOME/.emacs" "$HOME/.emacs.d"; do
+          if [ -e "$f" ]; then
+            echo "warning: $f exists and takes precedence over the XDG path" >&2
+          fi
+        done
+      - task: install:_file
+        vars: {SRC: '{{.DIR}}/init.el', DST: '{{.XDG_CONFIG_HOME}}/emacs/init.el'}
+      - task: install:_file
+        vars: {SRC: '{{.DIR}}/early-init.el', DST: '{{.XDG_CONFIG_HOME}}/emacs/early-init.el'}
+
+  install:_file:
+    internal: true
+    requires:
+      vars: [SRC, DST]
+    preconditions:
+      - sh: 'test -f "{{.SRC}}"'
+        msg: "Source not found: {{.SRC}}"
+    cmds:
+      - mkdir -p "$(dirname "{{.DST}}")"
+      - '[ ! -e "{{.DST}}" ] || cp "{{.DST}}" "{{.DST}}.bak"'
+      - cp "{{.SRC}}" "{{.DST}}.new"
+      - mv -f "{{.DST}}.new" "{{.DST}}"
+      - echo "Installed {{.DST}}"
+    silent: true
