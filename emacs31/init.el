@@ -98,6 +98,10 @@
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
+;; magit
+(use-package magit
+  :bind (("C-x g" . magit-status)))
+
 ;; nerd-icons (run M-x nerd-icons-install-fonts on first use only)
 (use-package nerd-icons)
 
