@@ -21,7 +21,7 @@ Confirm with the user before any step that pushes to the remote, creates a tag, 
 
 5. **`task push:tags`** — `git push origin HEAD --tags`, publishing the bump commit and the new tag. Confirm with the user first.
 
-6. **`task push:release -- X.Y.Z`** — the entry point of the release step. It calls `github:release` (`gh release create X.Y.Z --title "vX.Y.Z" --notes-file - --verify-tag`, with the front matter of `docs/releases/vX.Y.Z.md` stripped), publishing the GitHub release. A GitLab project calls `gitlab:release` (`glab release create`) instead. Requires the release note to already exist and be pushed. Confirm with the user first.
+6. **`task push:release -- X.Y.Z`** — the entry point of the release step. It calls `github:release` (`gh release create X.Y.Z --title "vX.Y.Z" --notes-file docs/releases/vX.Y.Z.md --verify-tag`), publishing the GitHub release. A GitLab project calls `gitlab:release` (`glab release create`) instead. Requires the release note to already exist and be pushed. Confirm with the user first.
 
 ## Notes
 

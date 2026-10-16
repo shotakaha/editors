@@ -161,10 +161,7 @@ tasks:
       - sh: 'command -v gh'
         msg: "gh command not found. Install GitHub CLI: https://cli.github.com/"
     cmds:
-      # Strip the front matter, and publish with the existing tag X.Y.Z
-      - |
-        awk 'NR == 1 && /^---$/ { skip = 1; next } skip && /^---$/ { skip = 0; next } !skip' "{{.SOURCE}}" |
-          gh release create {{.VERSION}} --title "v{{.VERSION}}" --notes-file - --verify-tag
+      - gh release create {{.VERSION}} --title "v{{.VERSION}}" --notes-file {{.SOURCE}} --verify-tag
 
   gitlab:release:
     desc: 'Create a GitLab release with release notes (usage: task gitlab:release -- X.Y.Z)'
