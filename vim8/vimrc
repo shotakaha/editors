@@ -21,13 +21,8 @@
 
 set nocompatible
 
-" Vim directory (the only place that depends on the vimrc location)
-" ~/.vimrc     -> ~/.vim
-" ~/.vim/vimrc -> ~/.vim
-let s:vimdir = expand('<sfile>:p:h')
-if s:vimdir ==# expand('~')
-    let s:vimdir = expand('~/.vim')
-endif
+" Vim directory (both ~/.vimrc and ~/.vim/vimrc use ~/.vim)
+let s:vimdir = expand('~/.vim')
 
 " """"""""""""""""""""
 " Plugins
@@ -139,7 +134,9 @@ set backup
 let &backupdir = s:vimdir . '/backup//'
 let &directory = s:vimdir . '/swap//'
 let &undodir = s:vimdir . '/undo//'
-set undofile
+if has('persistent_undo')
+    set undofile
+endif
 "set history=1000
 "set undolevels=1000
 "set undoreload=10000
@@ -227,12 +224,12 @@ xnoremap <C-x><C-l> :xmap<CR>
 " Modify Keymaps
 " nnoremap: normal mode
 " inoremap: insert mode
-" vnoremap: visual mode
+" vnoremap: visual + select mode
 " snoremap: select mode
 " onoremap: operator mode
 " cnoremap: command line mode
 " tnoremap: terminal mode
-" xnoremap: visual + select mode
+" xnoremap: visual mode
 
 " Modifiers
 " C-      Control

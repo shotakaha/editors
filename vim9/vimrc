@@ -227,12 +227,12 @@ xnoremap <C-x><C-l> :xmap<CR>
 " Modify Keymaps
 " nnoremap: normal mode
 " inoremap: insert mode
-" vnoremap: visual mode
+" vnoremap: visual + select mode
 " snoremap: select mode
 " onoremap: operator mode
 " cnoremap: command line mode
 " tnoremap: terminal mode
-" xnoremap: visual + select mode
+" xnoremap: visual mode
 
 " Modifiers
 " C-      Control
