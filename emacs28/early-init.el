@@ -1,4 +1,4 @@
-;;; early-init.el --- early settings with straight.el for Emacs 29 -*- lexical-binding: t; -*-
+;;; early-init.el --- early settings with straight.el for Emacs 28 or later -*- lexical-binding: t; -*-
 
 (setq gc-cons-threshold (* 50 1000 1000))
 

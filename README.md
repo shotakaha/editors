@@ -10,7 +10,7 @@ This repository stores the configuration files for the editors I use, such as VS
 | --- | --- | --- |
 | Vim | [vim9/vimrc](vim9/vimrc), [vim8/vimrc](vim8/vimrc) | Available |
 | Zed | [zed/settings.json](zed/settings.json), [zed/keymap.json](zed/keymap.json) | Available |
-| Emacs | [emacs31/](emacs31/), [emacs29/](emacs29/) | Available |
+| Emacs | [emacs31/](emacs31/), [emacs28/](emacs28/) | Available |
 | VS Code, ... | | Planned |
 
 ### Shell
@@ -28,7 +28,7 @@ set VIMRC ~/.config/vim/vimrc
 
 # Emacs (set one of them for SRC)
 set SRC emacs31
-# set SRC emacs29
+# set SRC emacs28
 set EMACS_DIR ~/.config/emacs
 
 # Zed
@@ -91,10 +91,10 @@ The Emacs configuration uses the built-in use-package.
 It sets up a minimal completion UI (Vertico, Orderless, Consult, Marginalia, Corfu, Cape) and Doom Modeline.
 There are two versions of the configuration.
 
-| Directory | Target | Package manager |
-| --- | --- | --- |
-| [emacs31/](emacs31/) | Emacs 31 | package.el (built-in) |
-| [emacs29/](emacs29/) | Emacs 29 or later | [straight.el](https://github.com/radian-software/straight.el) (bootstrapped in `early-init.el`) |
+| Directory | Target | use-package | Package manager |
+| --- | --- | --- | --- |
+| [emacs31/](emacs31/) | Emacs 31 | Built-in (since Emacs 29) | package.el (built-in) |
+| [emacs28/](emacs28/) | Emacs 28 or later | Installed with straight.el | [straight.el](https://github.com/radian-software/straight.el) (bootstrapped in `early-init.el`) |
 
 Each directory has `init.el` and `early-init.el`.
 
@@ -102,8 +102,8 @@ Each directory has `init.el` and `early-init.el`.
 # 0. Choose the version and the install directory (use ~/.emacs.d for the legacy location)
 #    Emacs 31
 SRC=emacs31
-#    Emacs 29 or later
-# SRC=emacs29
+#    Emacs 28 or later
+# SRC=emacs28
 EMACS_DIR=~/.config/emacs
 URL=https://raw.githubusercontent.com/shotakaha/editors/main
 
@@ -131,7 +131,7 @@ The steps above use `~/.config/emacs/` (XDG compliant), which is recommended on 
 Make sure `~/.emacs` and `~/.emacs.d/` do not exist, otherwise they take precedence.
 For an older Emacs, change `EMACS_DIR` to `~/.emacs.d`.
 
-Packages are installed automatically on the first run (MELPA for `emacs31/`, and git clones by straight.el for `emacs29/`, which also needs `git`).
+Packages are installed automatically on the first run (MELPA for `emacs31/`, and git clones by straight.el for `emacs28/`, which also needs `git`).
 Run `M-x nerd-icons-install-fonts` once to install the icon fonts.
 
 ### Zed

@@ -1,10 +1,12 @@
-;;; init.el --- straight.el + use-package setup for Emacs 29 -*- lexical-binding: t; -*-
+;;; init.el --- straight.el + use-package setup for Emacs 28 or later -*- lexical-binding: t; -*-
 
 ;; --------------------------------
-;; straight.el + use-package (built-in)
+;; straight.el + use-package
 ;; --------------------------------
 ;; straight.el is bootstrapped in early-init.el
+;; use-package is built-in since Emacs 29, install it with straight.el
 ;; Built-in packages need ":straight nil"
+(straight-use-package 'use-package)
 
 ;; --------------------------------
 ;; custom-file
