@@ -10,7 +10,7 @@ This repository stores the configuration files for the editors I use, such as VS
 | --- | --- | --- |
 | Vim | [vim9/vimrc](vim9/vimrc), [vim8/vimrc](vim8/vimrc) | Available |
 | Zed | [zed/settings.json](zed/settings.json), [zed/keymap.json](zed/keymap.json) | Available |
-| Emacs | [emacs/init.el](emacs/init.el), [emacs/early-init.el](emacs/early-init.el) | Available |
+| Emacs | [emacs31/init.el](emacs31/init.el), [emacs31/early-init.el](emacs31/early-init.el) | Available |
 | VS Code, ... | | Planned |
 
 ### Shell
@@ -99,8 +99,8 @@ cp "$EMACS_DIR/early-init.el" "$EMACS_DIR/early-init.el.bak"
 
 # 2. Download the files to temporary files
 mkdir -p "$EMACS_DIR"
-curl -fsSL --proto '=https' -o "$EMACS_DIR/init.el.new" "$URL/emacs/init.el"
-curl -fsSL --proto '=https' -o "$EMACS_DIR/early-init.el.new" "$URL/emacs/early-init.el"
+curl -fsSL --proto '=https' -o "$EMACS_DIR/init.el.new" "$URL/emacs31/init.el"
+curl -fsSL --proto '=https' -o "$EMACS_DIR/early-init.el.new" "$URL/emacs31/early-init.el"
 
 # 3. Replace the current files
 mv -f "$EMACS_DIR/init.el.new" "$EMACS_DIR/init.el"
