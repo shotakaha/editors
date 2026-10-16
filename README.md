@@ -8,7 +8,7 @@ This repository stores the configuration files for the editors I use, such as VS
 
 | Editor | Configuration | Status |
 | --- | --- | --- |
-| Vim | [vim/vimrc](vim/vimrc) | Available |
+| Vim | [vim/vim9rc](vim/vim9rc), [vim/vim8rc](vim/vim8rc) | Available |
 | Zed | [zed/settings.json](zed/settings.json), [zed/keymap.json](zed/keymap.json) | Available |
 | Emacs | [emacs/init.el](emacs/init.el), [emacs/early-init.el](emacs/early-init.el) | Available |
 | VS Code, ... | | Planned |
@@ -16,18 +16,30 @@ This repository stores the configuration files for the editors I use, such as VS
 ### Vim
 
 The Vim configuration uses [vim-plug](https://github.com/junegunn/vim-plug) for plugins and Emacs-like keybinds.
-Installation steps are written at the top of [vim/vimrc](vim/vimrc).
+There are two versions of the configuration.
+
+| File | Target |
+| --- | --- |
+| [vim/vim9rc](vim/vim9rc) | Vim 9.1.0327 or later |
+| [vim/vim8rc](vim/vim8rc) | Vim 8.0 or later |
+
+Installation steps are written at the top of each file.
 
 ```sh
-# 0. Set the install path (use ~/.vimrc for the legacy location)
+# 0. Choose the version and the install path
+#    Vim 9.1.0327 or later (XDG compliant)
+SRC=vim9rc
 VIMRC=~/.config/vim/vimrc
+#    Vim 8.0 or later
+# SRC=vim8rc
+# VIMRC=~/.vimrc
 
 # 1. Backup the current vimrc (skip if it does not exist)
 cp "$VIMRC" "$VIMRC.bak"
 
-# 2. Download vimrc to a temporary file
+# 2. Download the vimrc to a temporary file
 mkdir -p "$(dirname "$VIMRC")"
-curl -fsSL --proto '=https' -o "$VIMRC.new" https://raw.githubusercontent.com/shotakaha/editors/main/vim/vimrc
+curl -fsSL --proto '=https' -o "$VIMRC.new" "https://raw.githubusercontent.com/shotakaha/editors/main/vim/$SRC"
 
 # 3. Replace the current vimrc
 mv -f "$VIMRC.new" "$VIMRC"
@@ -41,10 +53,10 @@ Vim looks for the configuration in the following order and uses the first one th
 2. `~/.vim/vimrc`
 3. `$XDG_CONFIG_HOME/vim/vimrc` (`~/.config/vim/vimrc` by default, Vim 9.1.0327 or later)
 
-The steps above use `~/.config/vim/` (XDG compliant), which is recommended on a modern environment because it keeps the configuration together with other tools under `~/.config/`.
+`~/.config/vim/` (XDG compliant) is recommended on a modern environment because it keeps the configuration together with other tools under `~/.config/`.
 Make sure `~/.vimrc` and `~/.vim/` do not exist, otherwise they take precedence.
-For an older Vim, change `VIMRC` to `~/.vimrc`.
-[vim/vimrc](vim/vimrc) detects its own location, so vim-plug and the backup, swap and undo directories follow it without further changes.
+Vim older than 9.1.0327 does not read `~/.config/vim/`, so use `vim8rc` with `~/.vimrc`.
+Both files detect their own location, so vim-plug and the backup, swap and undo directories follow it without further changes.
 
 ### Emacs
 
