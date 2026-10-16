@@ -7,7 +7,7 @@ description: Cut a new release for a project using the shared Taskfile conventio
 
 Runs the release procedure defined by `templates/Taskfile.yml` (see the project's own CLAUDE.md/AGENTS.md for any project-specific notes). Every task lives in `templates/Taskfile.yml`, run via `task <name>` from the repo root. Do not skip steps or run them out of order — each depends on the previous one having succeeded.
 
-Confirm with the user before any step that pushes to the remote, creates a tag, or creates a GitLab release (steps 2–5 below all qualify). Never batch multiple steps into one approval.
+Confirm with the user before any step that pushes to the remote, creates a tag, or creates a GitHub release (steps 2–5 below all qualify). Never batch multiple steps into one approval.
 
 ## Steps
 
@@ -21,10 +21,10 @@ Confirm with the user before any step that pushes to the remote, creates a tag, 
 
 5. **`task push:tags`** — `git push origin HEAD --tags`, publishing the bump commit and the new tag. Confirm with the user first.
 
-6. **`task push:release -- X.Y.Z`** — `glab release create X.Y.Z --name "vX.Y.Z" --notes-file docs/releases/vX.Y.Z.md`, publishing the GitLab release. Requires the release note to already exist and be pushed. Confirm with the user first.
+6. **`task push:release -- X.Y.Z`** — the entry point of the release step. It calls `github:release` (`gh release create X.Y.Z --title "vX.Y.Z" --notes-file - --verify-tag`, with the front matter of `docs/releases/vX.Y.Z.md` stripped), publishing the GitHub release. A GitLab project calls `gitlab:release` (`glab release create`) instead. Requires the release note to already exist and be pushed. Confirm with the user first.
 
 ## Notes
 
-- The tag/release version has no `v` prefix (`X.Y.Z`), but the release note's filename/title use `vX.Y.Z` (`docs/releases/vX.Y.Z.md`). `glab`/`cz` won't catch a mismatch — get this right by hand.
+- The tag/release version has no `v` prefix (`X.Y.Z`), but the release note's filename/title use `vX.Y.Z` (`docs/releases/vX.Y.Z.md`). `gh`/`cz` won't catch a mismatch — get this right by hand.
 - If any step's precondition fails (e.g. `docs:release` refuses because the file exists), stop and tell the user rather than working around it.
 - Task names/behavior above match `templates/Taskfile.yml`'s current shared tasks; if a target project renamed or customized them, adjust the steps accordingly rather than assuming these exact names.

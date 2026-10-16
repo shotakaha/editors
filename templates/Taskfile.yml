@@ -139,8 +139,15 @@ tasks:
   # 2. task push:tags
   # 3. task docs:release -- X.Y.Z
   # 4. task push:release -- X.Y.Z
+  # Entry point of the release step: it calls the release task of the hosting
+  # service. Change it to `gitlab:release` for a GitLab project.
   push:release:
-    desc: 'Create a GitLab release with release notes (usage: task push:release -- X.Y.Z)'
+    desc: 'Create a release with release notes (usage: task push:release -- X.Y.Z)'
+    cmds:
+      - task: github:release
+
+  github:release:
+    desc: 'Create a GitHub release with release notes (usage: task github:release -- X.Y.Z)'
     requires:
       vars: [CLI_ARGS]
     vars:
@@ -148,9 +155,31 @@ tasks:
       SOURCE: "docs/releases/v{{.CLI_ARGS}}.md"
     preconditions:
       - sh: '[ -n "{{.CLI_ARGS}}" ]'
-        msg: "Version required. Usage: task push:release -- X.Y.Z"
+        msg: "Version required. Usage: task github:release -- X.Y.Z"
       - sh: 'test -f {{.SOURCE}}'
         msg: "Release note not found: {{.SOURCE}}"
+      - sh: 'command -v gh'
+        msg: "gh command not found. Install GitHub CLI: https://cli.github.com/"
+    cmds:
+      # Strip the front matter, and publish with the existing tag X.Y.Z
+      - |
+        awk 'NR == 1 && /^---$/ { skip = 1; next } skip && /^---$/ { skip = 0; next } !skip' "{{.SOURCE}}" |
+          gh release create {{.VERSION}} --title "v{{.VERSION}}" --notes-file - --verify-tag
+
+  gitlab:release:
+    desc: 'Create a GitLab release with release notes (usage: task gitlab:release -- X.Y.Z)'
+    requires:
+      vars: [CLI_ARGS]
+    vars:
+      VERSION: "{{.CLI_ARGS}}"
+      SOURCE: "docs/releases/v{{.CLI_ARGS}}.md"
+    preconditions:
+      - sh: '[ -n "{{.CLI_ARGS}}" ]'
+        msg: "Version required. Usage: task gitlab:release -- X.Y.Z"
+      - sh: 'test -f {{.SOURCE}}'
+        msg: "Release note not found: {{.SOURCE}}"
+      - sh: 'command -v glab'
+        msg: "glab command not found. Install GitLab CLI: https://gitlab.com/gitlab-org/cli"
     cmds:
       - glab release create {{.VERSION}} --name "v{{.VERSION}}" --notes-file {{.SOURCE}}
 

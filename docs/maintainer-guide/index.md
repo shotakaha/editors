@@ -13,7 +13,7 @@ This section covers items for maintainers of this project repository.
 3. `task docs:release -- vX.Y.Z`: Generate the release note for the new version
 4. `git commit -m "docs: release vX.Y.Z"`: Commit the release note
 5. `task push:tags`: Push the new version tag to the remote repository
-6. `task push:release -- vX.Y.Z`: Push the release note to the remote repository (GitLab repository)
+6. `task push:release -- vX.Y.Z`: Create the GitHub release from the release note
 
 ## Dependency Update Workflow
 
