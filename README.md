@@ -13,6 +13,29 @@ This repository stores the configuration files for the editors I use, such as VS
 | Emacs | [emacs/init.el](emacs/init.el), [emacs/early-init.el](emacs/early-init.el) | Available |
 | VS Code, ... | | Planned |
 
+### Shell
+
+The installation steps below are written for bash and zsh.
+In fish, replace the variable assignments in step 0 with `set`.
+The other steps work as they are (fish 3.4 or later).
+
+```fish
+# Vim (set one of them)
+set SRC vim9
+set VIMRC ~/.config/vim/vimrc
+# set SRC vim8
+# set VIMRC ~/.vimrc
+
+# Emacs
+set EMACS_DIR ~/.config/emacs
+
+# Zed
+set ZED_DIR ~/.config/zed
+
+# Common
+set URL https://raw.githubusercontent.com/shotakaha/editors/main
+```
+
 ### Vim
 
 The Vim configuration uses [vim-plug](https://github.com/junegunn/vim-plug) for plugins and Emacs-like keybinds.
