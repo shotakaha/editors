@@ -19,8 +19,6 @@
 " $ mv -f "$VIMRC.new" "$VIMRC"
 " """"""""""""""""""""
 
-set nocompatible
-
 " Vim directory (the only place that depends on the vimrc location)
 " ~/.vimrc            -> ~/.vim
 " ~/.vim/vimrc        -> ~/.vim
@@ -115,7 +113,6 @@ set showbreak=>>>
 " misc
 set mouse=a    " Enable mouse
 set lazyredraw
-set ttyfast
 set splitbelow
 set splitright
 set showmatch
@@ -205,10 +202,8 @@ if !s:has_airline
 endif
 set laststatus=2    " Always show status line
 set showcmd    " Show command at status line
-if exists('&showcmdloc')
-    set showcmdloc=tabline
-    set showtabline=2    " Always show tabline (showcmd is shown there)
-endif
+set showcmdloc=tabline
+set showtabline=2    " Always show tabline (showcmd is shown there)
 
 " """""
 " Keybinds
@@ -307,11 +302,19 @@ xnoremap X "_X
 " Emacs-like Keybinds
 " """""
 
+" Ex command (":cmd<CR>"): run it with <Cmd> and keep the current mode
+" Others (keys, or a command line to be completed): <C-o> in insert mode
 function! AddEmacsKey(lhs, rhs)
-    execute 'nnoremap' a:lhs a:rhs
-    execute 'xnoremap' a:lhs a:rhs
-    execute 'inoremap' a:lhs '<C-o>' . a:rhs
-    execute 'cnoremap' a:lhs '<C-c>' . a:rhs
+    if a:rhs =~# '^:.*<CR>$'
+        for l:mode in ['n', 'x', 'i']
+            execute l:mode . 'noremap' a:lhs '<Cmd>' . a:rhs[1:]
+        endfor
+    else
+        execute 'nnoremap' a:lhs a:rhs
+        execute 'xnoremap' a:lhs a:rhs
+        execute 'inoremap' a:lhs '<C-o>' . a:rhs
+        execute 'cnoremap' a:lhs '<C-c>' . a:rhs
+    endif
 endfunction
 
 " C-g: keyboard-quit
@@ -396,6 +399,8 @@ call AddEmacsKey('<C-/>', 'u')
 
 " C-k: kill-line
 call AddEmacsKey('<C-k>', 'd$')
+" At the end of the line in insert mode, join the next line
+inoremap <expr> <C-k> col('.') > strlen(getline('.')) ? "\<Del>" : "\<C-o>d$"
 
 " C-w: kill-region
 call AddEmacsKey('<C-w>', '"_d')
@@ -495,6 +500,8 @@ call AddEmacsKey('<C-x><C-t>', ':set<SPACE>wrap!<CR>')
 
 " C-;: toggle comment
 call AddEmacsKey('<C-;>', ':Commentary<CR>')
+" Visual mode needs the range of the selection
+xnoremap <C-;> :Commentary<CR>
 
 " """"""""""""""""""""
 " Developer
