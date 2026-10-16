@@ -274,9 +274,12 @@ nnoremap Q q:
 " zz: scroll cursor to the center
 " zv: unfold
 " :nohlsearch  Clear highlight
+" C-l: clear highlight and center the cursor
+" (do not map <Esc>: Vim 8.0 starts in Replace mode because of the
+"  terminal response to the cursor position query, which ends with R)
 nnoremap n nzzzv
 nnoremap N Nzzzv
-nnoremap <Esc> :nohlsearch<CR>
+nnoremap <silent> <C-l> :nohlsearch<CR>zz
 
 " Indent
 " gv: return to last visual region
