@@ -11,7 +11,7 @@ This repository stores the configuration files for the editors I use, such as VS
 | Vim | [vim9/vimrc](vim9/vimrc), [vim8/vimrc](vim8/vimrc) | Available |
 | Zed | [zed/settings.json](zed/settings.json), [zed/keymap.json](zed/keymap.json) | Available |
 | Emacs | [emacs31/](emacs31/), [emacs28/](emacs28/) | Available |
-| VS Code, ... | | Planned |
+| VS Code | [vscode/](vscode/) | Available |
 
 ### Task
 
@@ -23,6 +23,7 @@ The existing files are saved as `<file>.bak`.
 | `task install:vim9` | `$XDG_CONFIG_HOME/vim/vimrc` |
 | `task install:emacs31` | `$XDG_CONFIG_HOME/emacs/init.el`, `early-init.el` |
 | `task install:zed` | `$XDG_CONFIG_HOME/zed/settings.json`, `keymap.json` |
+| `task install:vscode` | `Code/User/settings.json`, `keybindings.json` (`~/.config` on Linux, `~/Library/Application Support` on macOS) |
 
 `$XDG_CONFIG_HOME` defaults to `~/.config`.
 `install:vim9` and `install:emacs31` stop if the legacy files (`~/.vimrc`, `~/.vim/vimrc`, `~/.emacs`, `~/.emacs.d`) exist, because they take precedence over the XDG paths.

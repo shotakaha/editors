@@ -22,6 +22,9 @@ vars:
   # XDG Base Directory (https://specifications.freedesktop.org/basedir-spec/latest/)
   XDG_CONFIG_HOME:
     sh: echo "${XDG_CONFIG_HOME:-$HOME/.config}"
+  # VS Code does not follow XDG on macOS
+  VSCODE_USER_DIR:
+    sh: if [ "$(uname)" = Darwin ]; then echo "$HOME/Library/Application Support/Code/User"; else echo "${XDG_CONFIG_HOME:-$HOME/.config}/Code/User"; fi
 
 tasks:
   # ============================================================================
@@ -62,6 +65,14 @@ tasks:
       - for: [settings.json, keymap.json]
         task: install:_file
         vars: {SRC: 'zed/{{.ITEM}}', DST: '{{.XDG_CONFIG_HOME}}/zed/{{.ITEM}}'}
+
+  install:vscode:
+    desc: Install vscode/ settings and keybindings to the VS Code user directory
+    silent: true
+    cmds:
+      - for: [settings.json, keybindings.json]
+        task: install:_file
+        vars: {SRC: 'vscode/{{.ITEM}}', DST: '{{.VSCODE_USER_DIR}}/{{.ITEM}}'}
 
   # Internal helper
   install:_file:
