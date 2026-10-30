@@ -1,0 +1,19 @@
+// Awesome Emacs Keymap (tuttieee.emacs-mcx) + VSpaceCode
+// エディタ内は M-m、サイドバーにフォーカスがあるときは SPC で VSpaceCode を呼び出す
+[
+  {
+    "key": "alt+m",
+    "command": "vspacecode.space",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "space",
+    "command": "vspacecode.space",
+    "when": "sideBarFocus && !inputFocus && !treeViewFilterOnType"
+  },
+  {
+    "key": "escape",
+    "command": "vspacecode.escapeKey",
+    "when": "whichkeyVisible"
+  }
+]
