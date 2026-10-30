@@ -1,0 +1,19 @@
+{
+  "recommendations": [
+    // Emacs / VSpaceCode
+    "tuttieee.emacs-mcx",
+    "vspacecode.vspacecode",
+    "vspacecode.whichkey",
+
+    // Python
+    "ms-python.python",
+    "charliermarsh.ruff",
+
+    // HTML / CSS / TypeScript
+    "biomejs.biome",
+
+    // C++
+    "llvm-vs-code-extensions.vscode-clangd",
+    "ms-vscode.cmake-tools"
+  ]
+}
