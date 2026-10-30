@@ -173,6 +173,53 @@ mv -f "$ZED_DIR/settings.json.new" "$ZED_DIR/settings.json"
 mv -f "$ZED_DIR/keymap.json.new" "$ZED_DIR/keymap.json"
 ```
 
+### VS Code
+
+The VS Code configuration uses [Awesome Emacs Keymap](https://marketplace.visualstudio.com/items?itemName=tuttieee.emacs-mcx) and [VSpaceCode](https://vspacecode.github.io/).
+VSpaceCode opens with `M-m` in the editor and with `SPC` when the sidebar is focused.
+
+| File | Scope | Use |
+| --- | --- | --- |
+| [vscode/settings.json](vscode/settings.json) | User | Copied by `task install:vscode` |
+| [vscode/keybindings.json](vscode/keybindings.json) | User | Copied by `task install:vscode` |
+| [vscode/extensions.json](vscode/extensions.json) | Workspace | Copy to `.vscode/` of a project |
+| [vscode/tasks.json](vscode/tasks.json) | Workspace | Copy to `.vscode/` of a project |
+| [vscode/launch.json](vscode/launch.json) | Workspace | Copy to `.vscode/` of a project |
+
+To install the user files without Task:
+
+```sh
+# 0. Set the install directory (Linux; on macOS use ~/Library/Application\ Support/Code/User)
+CODE_DIR=~/.config/Code/User
+URL=https://raw.githubusercontent.com/shotakaha/editors/main
+
+# 1. Backup the current settings (skip if they do not exist)
+cp "$CODE_DIR/settings.json" "$CODE_DIR/settings.json.bak"
+cp "$CODE_DIR/keybindings.json" "$CODE_DIR/keybindings.json.bak"
+
+# 2. Download the files to temporary files
+mkdir -p "$CODE_DIR"
+curl -fsSL --proto '=https' -o "$CODE_DIR/settings.json.new" "$URL/vscode/settings.json"
+curl -fsSL --proto '=https' -o "$CODE_DIR/keybindings.json.new" "$URL/vscode/keybindings.json"
+
+# 3. Replace the current files
+mv -f "$CODE_DIR/settings.json.new" "$CODE_DIR/settings.json"
+mv -f "$CODE_DIR/keybindings.json.new" "$CODE_DIR/keybindings.json"
+```
+
+## Project templates
+
+The `templates/` directory also has starting points for projects.
+Copy the files to the project root and replace the placeholders.
+Files that start with `.` (`.clangd`, `.clasp.json`) are hidden in `ls`; use `ls -a`.
+
+| Template | Files | Placeholders |
+| --- | --- | --- |
+| [templates/python/](templates/python/) | `pyproject.toml` (uv, ruff, zensical) | `PROJECT_NAME`, `PROJECT_DESCRIPTION` |
+| [templates/web/](templates/web/) | `biome.json` (HTML, CSS) | |
+| [templates/gas/](templates/gas/) | `tsconfig.json`, `.clasp.json`, `biome.json` (Google Apps Script, TypeScript, clasp) | `YOUR_SCRIPT_ID` |
+| [templates/cpp/](templates/cpp/) | `CMakeLists.txt`, `CMakePresets.json`, `.clangd`, `src/main.cpp` (C++, ROOT, Geant4, CMake) | `PROJECT_NAME` |
+
 ## Documentation
 
 Usage documentation lives in [docs/](docs/) and is built with [Zensical](https://zensical.org/).
