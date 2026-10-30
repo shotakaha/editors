@@ -22,10 +22,10 @@
     }
   },
 
-  // HTML / CSS / TypeScript (Google Apps Script)
-  "[html]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
-  "[css]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
-  "[typescript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  // HTML / CSS / TypeScript (Google Apps Script), Biome
+  "[html]": { "editor.defaultFormatter": "biomejs.biome" },
+  "[css]": { "editor.defaultFormatter": "biomejs.biome" },
+  "[typescript]": { "editor.defaultFormatter": "biomejs.biome" },
 
   // C++ + CMake (clangd)
   "C_Cpp.intelliSenseEngine": "disabled",
